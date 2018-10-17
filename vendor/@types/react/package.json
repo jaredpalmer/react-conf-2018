@@ -1,0 +1,106 @@
+{
+    "name": "@types/react",
+    "version": "16.4.7",
+    "description": "TypeScript definitions for React",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Asana",
+            "url": "https://asana.com"
+        },
+        {
+            "name": "AssureSign",
+            "url": "http://www.assuresign.com"
+        },
+        {
+            "name": "Microsoft",
+            "url": "https://microsoft.com"
+        },
+        {
+            "name": "John Reilly",
+            "url": "https://github.com/johnnyreilly",
+            "githubUsername": "johnnyreilly"
+        },
+        {
+            "name": "Benoit Benezech",
+            "url": "https://github.com/bbenezech",
+            "githubUsername": "bbenezech"
+        },
+        {
+            "name": "Patricio Zavolinsky",
+            "url": "https://github.com/pzavolinsky",
+            "githubUsername": "pzavolinsky"
+        },
+        {
+            "name": "Digiguru",
+            "url": "https://github.com/digiguru",
+            "githubUsername": "digiguru"
+        },
+        {
+            "name": "Eric Anderson",
+            "url": "https://github.com/ericanderson",
+            "githubUsername": "ericanderson"
+        },
+        {
+            "name": "Albert Kurniawan",
+            "url": "https://github.com/morcerf",
+            "githubUsername": "morcerf"
+        },
+        {
+            "name": "Tanguy Krotoff",
+            "url": "https://github.com/tkrotoff",
+            "githubUsername": "tkrotoff"
+        },
+        {
+            "name": "Dovydas Navickas",
+            "url": "https://github.com/DovydasNavickas",
+            "githubUsername": "DovydasNavickas"
+        },
+        {
+            "name": "Stéphane Goetz",
+            "url": "https://github.com/onigoetz",
+            "githubUsername": "onigoetz"
+        },
+        {
+            "name": "Josh Rutherford",
+            "url": "https://github.com/theruther4d",
+            "githubUsername": "theruther4d"
+        },
+        {
+            "name": "Guilherme Hübner",
+            "url": "https://github.com/guilhermehubner",
+            "githubUsername": "guilhermehubner"
+        },
+        {
+            "name": "Ferdy Budhidharma",
+            "url": "https://github.com/ferdaber",
+            "githubUsername": "ferdaber"
+        },
+        {
+            "name": "Johann Rakotoharisoa",
+            "url": "https://github.com/jrakotoharisoa",
+            "githubUsername": "jrakotoharisoa"
+        },
+        {
+            "name": "Olivier Pascal",
+            "url": "https://github.com/pascaloliv",
+            "githubUsername": "pascaloliv"
+        },
+        {
+            "name": "Martin Hochel",
+            "url": "https://github.com/hotell",
+            "githubUsername": "hotell"
+        }
+    ],
+    "main": "",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+    },
+    "scripts": {},
+    "dependencies": {
+        "csstype": "^2.2.0"
+    },
+    "typesPublisherContentHash": "887ff4df55e200bb8d1f4db2d2987e9f4658cdcda668d1b1d83e42d7914216cd",
+    "typeScriptVersion": "2.6"
+}
