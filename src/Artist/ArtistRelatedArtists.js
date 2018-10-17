@@ -8,7 +8,7 @@ class ArtistRelatedArtists extends React.Component {
   };
 
   componentDidMount() {
-    this.getArtistTopRelatedArtists();
+    this.getArtistRelated();
   }
 
   getArtistRelated = () => {

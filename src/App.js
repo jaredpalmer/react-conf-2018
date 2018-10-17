@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Router } from '@reach/router';
+import { Router, Link } from '@reach/router';
 import { fetch, setToken } from './fetch';
 import Search from './Search';
 import Artist from './Artist/Artist';
@@ -54,12 +54,12 @@ class App extends React.Component {
     return (
       <div className="app">
         <div className="nav">
-          <div className="logo">
+          <Link to="/" className="logo">
             <span role="img" aria-label="piano">
               🎹
             </span>
             Spotify
-          </div>
+          </Link>
         </div>
         <Router>
           <Auth path="/callback" />
