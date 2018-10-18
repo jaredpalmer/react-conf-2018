@@ -29,23 +29,25 @@ class Search extends React.Component {
   render() {
     const { isLoading, currentId } = this.state;
     if (isLoading) {
-      return <Spinner />;
+      return <Spinner size="large" />;
     }
     return (
-      <div className="search">
-        {this.state.results &&
-          this.state.results.artists &&
-          this.state.results.artists.items.length > 0 &&
-          this.state.results.artists.items.map(item => (
-            <ListItem
-              to={`/artist/${item.id}`}
-              onClick={currentId => this.setState({ currentId })}
-              key={item.id}
-              item={item}
-              currentId={currentId}
-            />
-          ))}
-      </div>
+      <React.Placeholder fallback={<Spinner size="large" />}>
+        <div className="search">
+          {this.state.results &&
+            this.state.results.artists &&
+            this.state.results.artists.items.length > 0 &&
+            this.state.results.artists.items.map(item => (
+              <ListItem
+                to={`/artist/${item.id}`}
+                onClick={currentId => this.setState({ currentId })}
+                key={item.id}
+                item={item}
+                currentId={currentId}
+              />
+            ))}
+        </div>
+      </React.Placeholder>
     );
   }
 }

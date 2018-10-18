@@ -4,7 +4,8 @@ import { Router, Redirect } from '@reach/router';
 import { fetch, setToken, getToken } from './fetch';
 import Nav from './components/Nav';
 import Search from './Search';
-import Artist from './suspense/Artist';
+// import Artist from './suspense/Artist';
+import Artist from './vanilla/Artist';
 
 class App extends React.Component {
   state = {};
@@ -18,10 +19,7 @@ class App extends React.Component {
     if (getToken()) {
       fetch('https://api.spotify.com/v1/me')
         .then(res => res.json())
-        .then(
-          user => console.log(user) || this.setState({ user }),
-          error => console.log(error)
-        );
+        .then(user => this.setState({ user }), error => console.log(error));
     }
   };
 

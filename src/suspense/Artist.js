@@ -59,10 +59,16 @@ class Artist extends React.Component {
     return (
       <div className="artist">
         <React.Placeholder fallback={<Spinner />}>
-          <ArtistHeading id={this.props.id} />
-          <ArtistTopTracks id={this.props.id} />
-          {/* <ArtistAlbums id={this.props.id} /> */}
-          <ArtistRelatedArtists id={this.props.id} />
+          <ArtistHeading id={this.props.id} key={`heading-${this.props.id}`} />
+          <ArtistTopTracks
+            id={this.props.id}
+            key={`topTracks-${this.props.id}`}
+          />
+          {/* <ArtistAlbums id={this.props.id} key={this.props.id} /> */}
+          <ArtistRelatedArtists
+            id={this.props.id}
+            key={`related-${this.props.id}`}
+          />
         </React.Placeholder>
       </div>
     );

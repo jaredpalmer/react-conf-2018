@@ -1,9 +1,10 @@
 import React from 'react';
 import { fetch } from '../fetch';
-
+import { Spinner } from '../components/Spinner';
+import ListItem from '../components/ListItem';
 class ArtistRelatedArtists extends React.Component {
   state = {
-    related: [],
+    artists: [],
     isLoading: true,
   };
 
@@ -15,7 +16,7 @@ class ArtistRelatedArtists extends React.Component {
     fetch(`https://api.spotify.com/v1/artists/${this.props.id}/related-artists`)
       .then(res => res.json())
       .then(
-        related => this.setState({ related, isLoading: false }),
+        ({ artists }) => this.setState({ artists, isLoading: false }),
         error => {
           this.setState({ isLoading: false });
           // throw new Error(error);
@@ -25,14 +26,17 @@ class ArtistRelatedArtists extends React.Component {
   };
 
   render() {
-    const { related, isLoading } = this.state;
-    if (isLoading) {
-      return '...loading';
-    }
+    const { artists, isLoading } = this.state;
     return (
       <div>
         <h3>Related Artists</h3>
-        {JSON.stringify(related, null, 2)}
+        {isLoading ? (
+          <Spinner className="center" />
+        ) : artists && artists.length > 0 ? (
+          artists.map(item => (
+            <ListItem to={`/artist/${item.id}`} key={item.id} item={item} />
+          ))
+        ) : null}
       </div>
     );
   }

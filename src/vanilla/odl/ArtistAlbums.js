@@ -1,6 +1,7 @@
 import React from 'react';
-import { fetch } from '../fetch';
+import { fetch } from '../../fetch';
 import uniqBy from 'lodash.uniqby';
+import { Spinner } from '../../components/Spinner';
 
 class ArtistAlbums extends React.Component {
   state = {
@@ -21,7 +22,6 @@ class ArtistAlbums extends React.Component {
       .then(res => res.json())
       .then(
         ({ items }) =>
-          console.log(items) ||
           this.setState({ albums: uniqBy(items, 'name'), isLoading: false }),
         error => {
           this.setState({ isLoading: false });
@@ -33,13 +33,14 @@ class ArtistAlbums extends React.Component {
 
   render() {
     const { albums, isLoading } = this.state;
-    if (isLoading) {
-      return '...loading';
-    }
+
     return (
       <div className="albums">
         <h3>Albums</h3>
-        {albums.length > 0 &&
+        {isLoading ? (
+          <Spinner />
+        ) : albums ? (
+          albums.length > 0 &&
           albums.map(album => (
             <div className="item " key={album.id}>
               {album.images && album.images.length > 0 ? (
@@ -68,7 +69,8 @@ class ArtistAlbums extends React.Component {
                 <div className="meta">{album.type.toUpperCase()}</div>
               </div>
             </div>
-          ))}
+          ))
+        ) : null}
       </div>
     );
   }

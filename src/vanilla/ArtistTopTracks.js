@@ -1,5 +1,7 @@
 import React from 'react';
 import { fetch } from '../fetch';
+import { Spinner } from '../components/Spinner';
+import { Track } from '../components/Track';
 
 class ArtistTopTracks extends React.Component {
   state = {
@@ -17,8 +19,7 @@ class ArtistTopTracks extends React.Component {
     )
       .then(res => res.json())
       .then(
-        ({ tracks }) =>
-          console.log(tracks) || this.setState({ tracks, isLoading: false }),
+        ({ tracks }) => this.setState({ tracks, isLoading: false }),
         error => {
           this.setState({ isLoading: false });
           throw new Error(error);
@@ -29,39 +30,15 @@ class ArtistTopTracks extends React.Component {
   render() {
     const { tracks, isLoading } = this.state;
 
-    if (isLoading) {
-      return '...loading';
-    }
     return (
       <div className="topTracks">
         <h3 className="center">Top Tracks</h3>
-        {tracks &&
+        {isLoading ? (
+          <Spinner className="center" />
+        ) : (
           tracks.length > 0 &&
-          tracks.map(track => (
-            <div className="item track" key={track.id}>
-              <svg
-                className="avatar"
-                style={{ borderRadius: 0, height: 24 }}
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 32 32"
-              >
-                <polygon
-                  fill="none"
-                  stroke="#111111"
-                  strokeWidth="2"
-                  strokeMiterlimit="10"
-                  points="6,30 6,2 29,16 "
-                />
-              </svg>
-
-              <div className="col">
-                <div className="name">{track.name}</div>
-                <div className="meta">{track.type.toUpperCase()}</div>
-              </div>
-            </div>
-          ))}
+          tracks.map(track => <Track key={track.id} track={track} />)
+        )}
       </div>
     );
   }

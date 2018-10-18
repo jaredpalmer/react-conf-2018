@@ -22,7 +22,6 @@ class ArtistAlbums extends React.Component {
       .then(res => res.json())
       .then(
         ({ items }) =>
-          console.log(items) ||
           this.setState({ albums: uniqBy(items, 'name'), isLoading: false }),
         error => {
           this.setState({ isLoading: false });

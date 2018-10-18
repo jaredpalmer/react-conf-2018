@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { createResource } from 'react-cache';
 import { cache } from '../cache';
-import { Spinner } from './Spinner';
+// import { Spinner } from './Spinner';
 
 export const AudioResource = createResource(
   src => {
-    const audio = document.createElement('audio');
+    const audio = new Audio(src);
     return new Promise((resolve, reject) => {
-      audio.src = src;
-      audio.onerror = reject;
       audio.onloadeddata = () => resolve(audio);
+      audio.onerror = reject;
     });
   },
   src => src
 );
 
 function Player({ url, onPause }) {
-  const audio = AudioResource.read(cache, url);
   useEffect(
     () => {
+      const audio = new Audio(url);
       audio.play();
       return () => {
         audio.pause();
@@ -84,11 +83,7 @@ export function Track({ track }) {
   return (
     <div className="item track" key={track.id}>
       {isPlaying ? (
-        <React.unstable_ConcurrentMode>
-          <React.Placeholder fallback={<Spinner />}>
-            <Player url={track.preview_url} onPause={handlePause} />
-          </React.Placeholder>
-        </React.unstable_ConcurrentMode>
+        <Player url={track.preview_url} onPause={handlePause} />
       ) : (
         <svg
           className="avatar"

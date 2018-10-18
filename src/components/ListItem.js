@@ -25,7 +25,15 @@ function ListItem({ item, to, onClick, currentId }) {
         </svg>
       )}
       <div className="col flex-1">
-        <Link to={to} className="name" onClick={() => onClick(item.id)}>
+        <Link
+          to={to}
+          className="name"
+          onClick={() => {
+            if (onClick) {
+              onClick(item.id);
+            }
+          }}
+        >
           {item.name}
         </Link>
         <div className="meta">{item.type.toUpperCase()}</div>

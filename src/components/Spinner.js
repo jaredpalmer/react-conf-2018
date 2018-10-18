@@ -20,13 +20,15 @@ const PATH_CLASS_NAMES = {
 };
 
 // Heavily inspired by https://codepen.io/mrrocks/pen/EiplA
-export function Spinner({ size = 'small' }) {
+export function Spinner({ size = 'small', ...props }) {
   const baseSize = SPINNER_SIZES[size];
   const pathSize = baseSize / 2;
   const strokeWidth = STROKE_WIDTHS[size];
   const pathRadius = `${baseSize / 2 - strokeWidth}px`;
   const className = PATH_CLASS_NAMES[size];
-  const containerClassName = `SpinnerContainer SpinnerContainer-${size}`;
+  const containerClassName = `SpinnerContainer SpinnerContainer-${size} ${
+    props.className
+  }`;
 
   return (
     <div className={containerClassName}>
