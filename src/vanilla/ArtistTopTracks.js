@@ -1,7 +1,7 @@
 import React from 'react';
 import { fetch } from '../fetch';
 import { Spinner } from '../components/Spinner';
-import { Track } from '../components/Track';
+import { Track } from './Track';
 
 class ArtistTopTracks extends React.Component {
   state = {

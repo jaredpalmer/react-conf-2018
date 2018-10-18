@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { fetch } from '../fetch';
 import { createResource } from 'react-cache';
 import { cache } from '../cache';
-import ListItem from '../components/ListItem';
+import ListItem from './SuspenseListItem';
 
 const ArtistRelatedArtistsResource = createResource(id =>
   fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`)
@@ -22,15 +22,17 @@ function ArtistRelatedArtists(props) {
     <div>
       <h3>Related Artists</h3>
       {related &&
-        related.map(item => (
-          <ListItem
-            to={`/artist/${item.id}`}
-            onClick={currentId => setCurrent(currentId)}
-            key={item.id}
-            item={item}
-            currentId={currentId}
-          />
-        ))}
+        related
+          .slice(0, 3)
+          .map(item => (
+            <ListItem
+              to={`/artist/${item.id}`}
+              onClick={currentId => setCurrent(currentId)}
+              key={item.id}
+              item={item}
+              currentId={currentId}
+            />
+          ))}
     </div>
   );
 }

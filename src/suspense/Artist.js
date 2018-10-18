@@ -3,7 +3,7 @@ import { fetch } from '../fetch';
 import { createResource } from 'react-cache';
 import { cache } from '../cache';
 import { Spinner } from '../components/Spinner';
-
+import { Img } from './Img';
 const ArtistTopTracks = React.lazy(() => import('./ArtistTopTracks'));
 // const ArtistAlbums = React.lazy(() => import('./ArtistAlbums'));
 const ArtistRelatedArtists = React.lazy(() => import('./ArtistRelatedArtists'));
@@ -27,7 +27,7 @@ function ArtistHeading(props) {
       artist.images.length > 0 &&
       artist.images[2] &&
       artist.images[2].url ? (
-        <img className="artwork" src={artist.images[2].url} alt={artist.name} />
+        <Img className="artwork" src={artist.images[2].url} alt={artist.name} />
       ) : (
         <svg
           className="artwork"

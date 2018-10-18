@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Spinner } from './Spinner';
+import { Spinner } from '../components/Spinner';
 
 function Player({ url, onPause }) {
   const [isLoading, setLoading] = useState(true);
@@ -106,18 +106,3 @@ export function Track({ track }) {
     </div>
   );
 }
-
-// import { createResource } from 'react-cache';
-// import { cache } from '../cache';
-// import { Spinner } from './Spinner';
-
-// export const AudioResource = createResource(
-//   src => {
-//     const audio = new Audio(src);
-//     return new Promise((resolve, reject) => {
-//       audio.onloadeddata = () => resolve(audio);
-//       audio.onerror = reject;
-//     });
-//   },
-//   src => src
-// );
