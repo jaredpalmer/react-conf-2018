@@ -13,6 +13,7 @@
     "qs": "^6.5.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-error-boundary": "^1.2.3",
     "react-scripts": "2.0.5",
     "react-simple-infinite-scroll": "^0.0.1",
     "react-waypoint": "^8.0.3"

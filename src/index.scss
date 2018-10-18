@@ -54,6 +54,10 @@ h6 {
   flex-direction: column;
 }
 
+.flex-1 {
+  flex: 1
+}
+
 
 .center {
   text-align: center;
@@ -74,6 +78,11 @@ h6 {
   a {
     color: $accent;
     text-decoration: none;
+  }
+
+  .search {
+    max-width: 500px;
+    margin: 0 auto;
   }
 
   .nav {

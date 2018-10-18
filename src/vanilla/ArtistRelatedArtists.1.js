@@ -1,28 +1,22 @@
 import React from 'react';
 import { fetch } from '../fetch';
-import uniqBy from 'lodash.uniqby';
+import { Link } from '@reach/router';
 
-class ArtistAlbums extends React.Component {
+class ArtistRelatedArtists extends React.Component {
   state = {
-    albums: [],
+    related: [],
     isLoading: true,
   };
 
   componentDidMount() {
-    this.getArtistAlbums();
+    this.getArtistRelated();
   }
 
-  getArtistAlbums = () => {
-    fetch(
-      `https://api.spotify.com/v1/artists/${
-        this.props.id
-      }/albums?market=from_token&album_type=album`
-    )
+  getArtistRelated = () => {
+    fetch(`https://api.spotify.com/v1/artists/${this.props.id}/related-artists`)
       .then(res => res.json())
       .then(
-        ({ items }) =>
-          console.log(items) ||
-          this.setState({ albums: uniqBy(items, 'name'), isLoading: false }),
+        ({ artists }) => this.setState({ related: artists, isLoading: false }),
         error => {
           this.setState({ isLoading: false });
           // throw new Error(error);
@@ -32,21 +26,24 @@ class ArtistAlbums extends React.Component {
   };
 
   render() {
-    const { albums, isLoading } = this.state;
+    const { related, isLoading } = this.state;
     if (isLoading) {
       return '...loading';
     }
     return (
-      <div className="albums">
-        <h3>Albums</h3>
-        {albums.length > 0 &&
-          albums.map(album => (
-            <div className="item " key={album.id}>
-              {album.images && album.images.length > 0 ? (
+      <div>
+        <h3>Related Artists</h3>
+        {related &&
+          related.map(item => (
+            <div className="item" key={item.id}>
+              {item.images &&
+              item.images.length > 0 &&
+              item.images[2] &&
+              item.images[2].url ? (
                 <img
                   className="avatar"
-                  src={album.images[2].url}
-                  alt={album.name}
+                  src={item.images[2].url}
+                  alt={item.name}
                 />
               ) : (
                 <svg
@@ -62,10 +59,11 @@ class ArtistAlbums extends React.Component {
                   />
                 </svg>
               )}
-
               <div className="col">
-                <div className="name">{album.name}</div>
-                <div className="meta">{album.type.toUpperCase()}</div>
+                <Link to={`/a/${item.id}`} className="name">
+                  {item.name}
+                </Link>
+                <div className="meta">{item.type.toUpperCase()}</div>
               </div>
             </div>
           ))}
@@ -74,4 +72,4 @@ class ArtistAlbums extends React.Component {
   }
 }
 
-export default ArtistAlbums;
+export default ArtistRelatedArtists;

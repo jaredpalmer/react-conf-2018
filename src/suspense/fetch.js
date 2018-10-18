@@ -1,7 +1,7 @@
 let token;
 
 export function getToken() {
-  localStorage.getItem('spotify-token');
+  return localStorage.getItem('spotify-token');
 }
 
 export const setToken = t => {
@@ -23,8 +23,6 @@ export const fetch = (url, options) => {
         if (res.status === 401) {
           token = undefined;
           localStorage.removeItem('spotify-token');
-
-          throw new Error('Unauthorized');
         }
         return res;
       })
