@@ -88,6 +88,11 @@ h6 {
   .nav {
     border-bottom: 1px solid $light;
     padding: 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: $white;
 
     .logo {
       color: $black;
@@ -95,6 +100,10 @@ h6 {
       letter-spacing: -0.03em;
       font-weight: 800;
     }
+  }
+
+  .main {
+    padding-top: 60px;
   }
 
   .item {
@@ -116,6 +125,10 @@ h6 {
       font-size: 14px;
       font-weight: 500;
       margin-bottom: .25rem;
+      word-wrap: none;
+      max-width: 320px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .meta {

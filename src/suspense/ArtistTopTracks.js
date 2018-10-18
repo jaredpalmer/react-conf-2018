@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetch } from './fetch';
+import { fetch } from '../fetch';
 import { createResource } from 'react-cache';
 import { cache } from '../cache';
 import { Track, AudioResource } from '../components/Track';

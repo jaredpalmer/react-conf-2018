@@ -1,11 +1,11 @@
 import React from 'react';
-import { fetch } from './fetch';
+import { fetch } from '../fetch';
 import { createResource } from 'react-cache';
 import { cache } from '../cache';
 import { Spinner } from '../components/Spinner';
 
 const ArtistTopTracks = React.lazy(() => import('./ArtistTopTracks'));
-const ArtistAlbums = React.lazy(() => import('./ArtistAlbums'));
+// const ArtistAlbums = React.lazy(() => import('./ArtistAlbums'));
 const ArtistRelatedArtists = React.lazy(() => import('./ArtistRelatedArtists'));
 
 const ArtistResource = createResource(id =>
@@ -52,7 +52,7 @@ function ArtistHeading(props) {
 class Artist extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.id !== prevProps.id) {
-      window.scrollTo(0, 0);
+      window.scrollTo(0, -50);
     }
   }
   render() {
@@ -61,7 +61,7 @@ class Artist extends React.Component {
         <React.Placeholder fallback={<Spinner />}>
           <ArtistHeading id={this.props.id} />
           <ArtistTopTracks id={this.props.id} />
-          <ArtistAlbums id={this.props.id} />
+          {/* <ArtistAlbums id={this.props.id} /> */}
           <ArtistRelatedArtists id={this.props.id} />
         </React.Placeholder>
       </div>

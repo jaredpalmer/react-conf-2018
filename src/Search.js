@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetch } from './full-suspense/fetch';
+import { fetch } from './fetch';
 
 import { Spinner } from './components/Spinner';
 import ListItem from './components/ListItem';

@@ -1,10 +1,10 @@
 import React from 'react';
 import ErrorBoundary from 'react-error-boundary';
 import { Router, Redirect } from '@reach/router';
-import { fetch, setToken, getToken } from './full-suspense/fetch';
+import { fetch, setToken, getToken } from './fetch';
 import Nav from './components/Nav';
 import Search from './Search';
-import Artist from './full-suspense/Artist';
+import Artist from './suspense/Artist';
 
 class App extends React.Component {
   state = {};
@@ -30,7 +30,6 @@ class App extends React.Component {
     return (
       <ErrorBoundary>
         <div className="app">
-          <Nav />
           {!this.state.user &&
             !token && (
               <div className="login">
@@ -40,9 +39,11 @@ class App extends React.Component {
               </div>
             )}
           <Router>
-            <Auth path="/callback" user={this.state.user} />
-            <Search path="/" />
-            <Artist path="/artist/:id" />
+            <Nav default>
+              <Auth path="/callback" user={this.state.user} />
+              <Search path="/" />
+              <Artist path="/artist/:id" />
+            </Nav>
           </Router>
         </div>
       </ErrorBoundary>

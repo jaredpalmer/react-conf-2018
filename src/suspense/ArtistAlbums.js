@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetch } from './fetch';
+import { fetch } from '../fetch';
 import uniqBy from 'lodash.uniqby';
 import ListItem from '../components/ListItem';
 class ArtistAlbums extends React.Component {
