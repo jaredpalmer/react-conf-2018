@@ -16,7 +16,8 @@
     "react-error-boundary": "^1.2.3",
     "react-scripts": "2.0.5",
     "react-simple-infinite-scroll": "^0.0.1",
-    "react-waypoint": "^8.0.3"
+    "react-waypoint": "^8.0.3",
+    "the-platform": "^0.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
