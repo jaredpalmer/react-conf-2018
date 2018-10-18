@@ -5,7 +5,7 @@ import { fetch, setToken, getToken } from './fetch';
 import Nav from './components/Nav';
 import Search from './Search';
 // import Artist from './suspense/Artist';
-import Artist from './vanilla/Artist';
+import ArtistPage from './vanilla/ArtistPage';
 
 class App extends React.Component {
   state = {};
@@ -47,7 +47,7 @@ class App extends React.Component {
             <Nav default>
               <Auth path="/callback" user={this.state.user} />
               <Search path="/" />
-              <Artist path="/artist/:id" />
+              <ArtistPage path="/artist/:id" />
             </Nav>
           </Router>
         </div>

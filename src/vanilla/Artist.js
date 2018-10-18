@@ -1,14 +1,10 @@
 import React from 'react';
 import { fetch } from '../fetch';
-import ArtistTopTracks from './ArtistTopTracks';
-import ArtistRelatedArtists from './ArtistRelatedArtists';
 import { Spinner } from '../components/Spinner';
 
 class Artist extends React.Component {
   state = {
     artist: null,
-    albums: [],
-    related: [],
     isLoading: true,
   };
 
@@ -20,9 +16,6 @@ class Artist extends React.Component {
     if (prevProps.id !== this.props.id) {
       this.setState({ isLoading: true, artist: null });
       this.getData();
-      if (this.props.id !== prevProps.id) {
-        window.scrollTo(0, -50);
-      }
     }
   }
 
@@ -47,11 +40,11 @@ class Artist extends React.Component {
     const { artist, isLoading } = this.state;
 
     return (
-      <div className="artist">
+      <React.Fragment>
         {isLoading ? (
           <Spinner className="center" />
         ) : artist ? (
-          <div className="heading">
+          <div className="heading row">
             {artist.images && artist.images.length > 0 ? (
               <img
                 className="artwork"
@@ -76,17 +69,7 @@ class Artist extends React.Component {
             <h1>{artist.name}</h1>
           </div>
         ) : null}
-
-        <ArtistTopTracks
-          id={this.props.id}
-          key={`topTracks-${this.props.id}`}
-        />
-        {/* <ArtistAlbums id={this.props.id} key={this.props.id} /> */}
-        <ArtistRelatedArtists
-          id={this.props.id}
-          key={`related-${this.props.id}`}
-        />
-      </div>
+      </React.Fragment>
     );
   }
 }
