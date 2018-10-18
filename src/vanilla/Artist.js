@@ -74,7 +74,6 @@ class Artist extends React.Component {
             )}
 
             <h1>{artist.name}</h1>
-            <div className="meta">{artist.type.toUpperCase()}</div>
           </div>
         ) : null}
 

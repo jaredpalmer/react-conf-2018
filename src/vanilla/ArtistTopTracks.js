@@ -36,8 +36,11 @@ class ArtistTopTracks extends React.Component {
         {isLoading ? (
           <Spinner className="center" />
         ) : (
+          tracks &&
           tracks.length > 0 &&
-          tracks.map(track => <Track key={track.id} track={track} />)
+          tracks
+            .slice(0, 3)
+            .map(track => <Track key={track.id} track={track} />)
         )}
       </div>
     );

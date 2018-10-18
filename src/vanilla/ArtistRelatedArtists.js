@@ -33,9 +33,11 @@ class ArtistRelatedArtists extends React.Component {
         {isLoading ? (
           <Spinner className="center" />
         ) : artists && artists.length > 0 ? (
-          artists.map(item => (
-            <ListItem to={`/artist/${item.id}`} key={item.id} item={item} />
-          ))
+          artists
+            .slice(0, 3)
+            .map(item => (
+              <ListItem to={`/artist/${item.id}`} key={item.id} item={item} />
+            ))
         ) : null}
       </div>
     );

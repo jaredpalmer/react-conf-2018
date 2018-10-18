@@ -1,24 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { createResource } from 'react-cache';
-import { cache } from '../cache';
-// import { Spinner } from './Spinner';
-
-export const AudioResource = createResource(
-  src => {
-    const audio = new Audio(src);
-    return new Promise((resolve, reject) => {
-      audio.onloadeddata = () => resolve(audio);
-      audio.onerror = reject;
-    });
-  },
-  src => src
-);
+import { Spinner } from './Spinner';
 
 function Player({ url, onPause }) {
+  const [isLoading, setLoading] = useState(true);
   useEffect(
     () => {
       const audio = new Audio(url);
-      audio.play();
+      audio.onloadeddata = () => {
+        setLoading(false);
+        audio.play();
+      };
       return () => {
         audio.pause();
         onPause();
@@ -34,42 +25,46 @@ function Player({ url, onPause }) {
           onPause();
         }}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="32"
-          height="32"
-          className="avatar"
-          style={{ borderRadius: 0, height: 24 }}
-          viewBox="0 0 32 32"
-        >
-          <g
-            className="nc-icon-wrapper"
-            strokeLinecap="square"
-            strokeLinejoin="miter"
-            strokeWidth="2"
-            fill="rgb(34, 162, 70)"
-            stroke="rgb(34, 162, 70)"
+        {isLoading ? (
+          <Spinner className="avatar" />
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            className="avatar"
+            style={{ borderRadius: 0, height: 24 }}
+            viewBox="0 0 32 32"
           >
-            <rect
-              x="3"
-              y="2"
-              fill="none"
+            <g
+              className="nc-icon-wrapper"
+              strokeLinecap="square"
+              strokeLinejoin="miter"
+              strokeWidth="2"
+              fill="rgb(34, 162, 70)"
               stroke="rgb(34, 162, 70)"
-              strokeMiterlimit="10"
-              width="7"
-              height="28"
-            />
-            <rect
-              x="22"
-              y="2"
-              fill="none"
-              stroke="rgb(34, 162, 70)"
-              strokeMiterlimit="10"
-              width="7"
-              height="28"
-            />
-          </g>
-        </svg>
+            >
+              <rect
+                x="3"
+                y="2"
+                fill="none"
+                stroke="rgb(34, 162, 70)"
+                strokeMiterlimit="10"
+                width="7"
+                height="28"
+              />
+              <rect
+                x="22"
+                y="2"
+                fill="none"
+                stroke="rgb(34, 162, 70)"
+                strokeMiterlimit="10"
+                width="7"
+                height="28"
+              />
+            </g>
+          </svg>
+        )}
       </div>
     </React.Fragment>
   );
@@ -111,3 +106,18 @@ export function Track({ track }) {
     </div>
   );
 }
+
+// import { createResource } from 'react-cache';
+// import { cache } from '../cache';
+// import { Spinner } from './Spinner';
+
+// export const AudioResource = createResource(
+//   src => {
+//     const audio = new Audio(src);
+//     return new Promise((resolve, reject) => {
+//       audio.onloadeddata = () => resolve(audio);
+//       audio.onerror = reject;
+//     });
+//   },
+//   src => src
+// );
