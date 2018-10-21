@@ -1,108 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import { Spinner } from '../components/Spinner';
+import IconPause from '../components/IconPause';
+import IconPlay from '../components/IconPlay';
 
-function Player({ url, onPause }) {
-  const [isLoading, setLoading] = useState(true);
-  useEffect(
-    () => {
-      const audio = new Audio(url);
-      audio.onloadeddata = () => {
-        setLoading(false);
-        audio.play();
-      };
-      return () => {
-        audio.pause();
-        onPause();
-      };
-    },
-    [url]
-  );
-  return (
-    <React.Fragment>
-      <div
-        role="button"
-        onClick={() => {
-          onPause();
-        }}
-      >
-        {isLoading ? (
-          <Spinner className="avatar" />
-        ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            className="avatar"
-            style={{ borderRadius: 0, height: 24 }}
-            viewBox="0 0 32 32"
-          >
-            <g
-              className="nc-icon-wrapper"
-              strokeLinecap="square"
-              strokeLinejoin="miter"
-              strokeWidth="2"
-              fill="rgb(34, 162, 70)"
-              stroke="rgb(34, 162, 70)"
-            >
-              <rect
-                x="3"
-                y="2"
-                fill="none"
-                stroke="rgb(34, 162, 70)"
-                strokeMiterlimit="10"
-                width="7"
-                height="28"
-              />
-              <rect
-                x="22"
-                y="2"
-                fill="none"
-                stroke="rgb(34, 162, 70)"
-                strokeMiterlimit="10"
-                width="7"
-                height="28"
-              />
-            </g>
-          </svg>
-        )}
+class Player extends React.Component {
+  state = {
+    isLoading: true,
+  };
+
+  componentDidMount() {
+    const { url } = this.props;
+    this.audio = new Audio(url);
+    this.audio.onloadeddata = () => {
+      this.setState({ isLoading: false });
+      this.audio.play();
+    };
+  }
+
+  componentWillUnmount() {
+    this.audio.pause();
+    this.props.onPause();
+  }
+  handleClick = () => {
+    this.props.onPause();
+  };
+  render() {
+    const { isLoading } = this.state;
+    return (
+      <div role="button" onClick={this.handleClick}>
+        {isLoading ? <Spinner className="avatar" /> : <IconPause />}
       </div>
-    </React.Fragment>
-  );
+    );
+  }
 }
 
-export function Track({ track }) {
-  const [isPlaying, updatePlaying] = useState(false);
-  function handlePause() {
-    return updatePlaying(false);
-  }
-  return (
-    <div className="item track" key={track.id}>
-      {isPlaying ? (
-        <Player url={track.preview_url} onPause={handlePause} />
-      ) : (
-        <svg
-          className="avatar"
-          style={{ borderRadius: 0, height: 24 }}
-          xmlns="http://www.w3.org/2000/svg"
-          width="32"
-          height="32"
-          viewBox="0 0 32 32"
-          onClick={() => updatePlaying(true)}
-        >
-          <polygon
-            fill="none"
-            stroke="#111111"
-            strokeWidth="2"
-            strokeMiterlimit="10"
-            points="6,30 6,2 29,16 "
-          />
-        </svg>
-      )}
+export class Track extends React.Component {
+  state = {
+    isPlaying: false,
+  };
 
-      <div className="col">
-        <div className="name">{track.name}</div>
-        <div className="meta">{track.type.toUpperCase()}</div>
+  handlePause = () => this.setState({ isPlaying: false });
+  handlePlay = () => this.setState({ isPlaying: true });
+  render() {
+    const { isPlaying } = this.state;
+    const { track } = this.props;
+    return (
+      <div className="item track" key={track.id}>
+        {isPlaying ? (
+          <Player url={track.preview_url} onPause={this.handlePause} />
+        ) : (
+          <IconPlay />
+        )}
+
+        <div className="col">
+          <div className="name">{track.name}</div>
+          <div className="meta">{track.type.toUpperCase()}</div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }

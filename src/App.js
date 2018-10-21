@@ -3,9 +3,14 @@ import ErrorBoundary from 'react-error-boundary';
 import { Router, Redirect } from '@reach/router';
 import { fetch, setToken, getToken } from './fetch';
 import Nav from './components/Nav';
-import Search from './Search';
-// import Artist from './suspense/Artist';
-import ArtistPage from './vanilla/ArtistPage';
+import { codeSplitComponent } from './codeSplitComponent';
+
+const Search = codeSplitComponent(() =>
+  import('./Search').then(mod => mod.default)
+);
+const ArtistPage = codeSplitComponent(() =>
+  import('./vanilla/ArtistPage').then(mod => mod.default)
+);
 
 class App extends React.Component {
   state = {};

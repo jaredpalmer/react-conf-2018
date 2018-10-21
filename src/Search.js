@@ -1,10 +1,12 @@
 import React from 'react';
 import { fetch } from './fetch';
-
+import { unstable_scheduleCallback } from 'scheduler';
 import { Spinner } from './components/Spinner';
 import ListItem from './components/ListItem';
 class Search extends React.Component {
   state = {
+    value: '',
+    asyncValue: '',
     isLoading: true,
     results: [],
     currentId: null,
@@ -26,17 +28,26 @@ class Search extends React.Component {
       );
   };
 
+  handleChange = event => {
+    event.persist();
+    this.setState({ value: event.target.value });
+    unstable_scheduleCallback(() => {
+      this.setState({ asyncValue: event.target.value }, () =>
+        this.search(this.state.asyncValue)
+      );
+    });
+  };
+
   render() {
-    const { isLoading, currentId } = this.state;
-    if (isLoading) {
-      return <Spinner size="large" />;
-    }
+    const { isLoading, currentId, results, value } = this.state;
+
     return (
       <div className="search">
-        {this.state.results &&
-          this.state.results.artists &&
-          this.state.results.artists.items.length > 0 &&
-          this.state.results.artists.items.map(item => (
+        <input value={value} onChange={this.handleChange} />
+        {isLoading ? (
+          <Spinner size="large" />
+        ) : results && results.artists && results.artists.items.length > 0 ? (
+          results.artists.items.map(item => (
             <ListItem
               to={`/artist/${item.id}`}
               onClick={currentId => this.setState({ currentId })}
@@ -44,7 +55,8 @@ class Search extends React.Component {
               item={item}
               currentId={currentId}
             />
-          ))}
+          ))
+        ) : null}
       </div>
     );
   }
