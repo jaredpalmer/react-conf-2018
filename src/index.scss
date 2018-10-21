@@ -88,6 +88,8 @@ h6 {
   .search {
     max-width: 500px;
     margin: 0 auto;
+    padding: 1rem;
+    box-sizing: border-box;
 
     .input {
       margin: 2rem 0;
@@ -97,6 +99,7 @@ h6 {
       font-size: 1.25rem;
       display: block;
       border: 1px solid #bbb;
+      box-sizing: border-box;
     }
 
     .empty {
