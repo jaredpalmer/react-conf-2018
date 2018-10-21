@@ -1,36 +1,32 @@
 import React from 'react';
-import { fetch } from './fetch';
+
 import { unstable_scheduleCallback } from 'scheduler';
-import { Spinner } from './components/Spinner';
-import ListItem from './components/ListItem';
+import { Spinner } from '../components/Spinner';
+import ListItem from '../components/ListItem';
+import { searchArtistsJSON } from '../api';
+import { trimExt } from 'upath';
+
 class Search extends React.Component {
   state = {
     value: '',
     asyncValue: '',
-    isLoading: true,
-    results: [],
+    isLoading: false,
+
     currentId: null,
   };
 
-  componentDidMount() {
-    this.search();
-  }
-
-  search = (query = 'beatles') => {
+  search = query => {
     this.setState({ isLoading: true });
-    fetch(
-      `https://api.spotify.com/v1/search?q=${query.trim()}&type=artist,album`
-    )
-      .then(res => res.json())
-      .then(
-        results => this.setState({ results: results, isLoading: false }),
-        error => console.log(error)
-      );
+    searchArtistsJSON(query).then(
+      results => this.setState({ results, isLoading: false }),
+      error => console.log(error)
+    );
   };
 
   handleChange = event => {
     event.persist();
     this.setState({ value: event.target.value });
+    // Search with the new hip, low-priority version of state
     unstable_scheduleCallback(() => {
       this.setState({ asyncValue: event.target.value }, () =>
         this.search(this.state.asyncValue)
@@ -43,11 +39,11 @@ class Search extends React.Component {
 
     return (
       <div className="search">
-        <input value={value} onChange={this.handleChange} />
+        <input className="input" value={value} onChange={this.handleChange} />
         {isLoading ? (
           <Spinner size="large" />
-        ) : results && results.artists && results.artists.items.length > 0 ? (
-          results.artists.items.map(item => (
+        ) : results && results.length > 0 ? (
+          results.map(item => (
             <ListItem
               to={`/artist/${item.id}`}
               onClick={currentId => this.setState({ currentId })}
@@ -56,7 +52,9 @@ class Search extends React.Component {
               currentId={currentId}
             />
           ))
-        ) : null}
+        ) : (
+          <div className="empty">No Results Found. Search for artists.</div>
+        )}
       </div>
     );
   }

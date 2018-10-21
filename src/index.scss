@@ -88,6 +88,25 @@ h6 {
   .search {
     max-width: 500px;
     margin: 0 auto;
+
+    .input {
+      margin: 2rem 0;
+      width: 100%;
+      padding: .5rem 1rem;
+      border-radius: 2px;
+      font-size: 1.25rem;
+      display: block;
+      border: 1px solid #bbb;
+    }
+
+    .empty {
+      max-width: 500px;
+      margin: 2rem auto;
+      font-weight: bold;
+      text-align: center;
+
+      color: $dark;
+    }
   }
 
   .nav {
@@ -165,7 +184,8 @@ h6 {
 
     .artwork {
       margin-right: 2rem;
-      width: 75px;
+      width: 150px;
+      border-radius: 50%;
 
     }
 

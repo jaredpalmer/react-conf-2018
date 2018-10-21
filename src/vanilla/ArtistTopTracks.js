@@ -1,7 +1,7 @@
 import React from 'react';
-import { fetch } from '../fetch';
 import { Spinner } from '../components/Spinner';
 import { Track } from './Track';
+import { fetchArtistTopTracksJSON } from '../api';
 
 class ArtistTopTracks extends React.Component {
   state = {
@@ -10,26 +10,22 @@ class ArtistTopTracks extends React.Component {
   };
 
   componentDidMount() {
-    this.getArtistTopTracks();
+    fetchArtistTopTracksJSON(this.props.id).then(
+      tracks => this.setState({ tracks, isLoading: false }),
+      error => this.setState({ isLoading: false })
+    );
   }
 
-  getArtistTopTracks = () => {
-    fetch(
-      `https://api.spotify.com/v1/artists/${this.props.id}/top-tracks?market=US`
-    )
-      .then(res => res.json())
-      .then(
-        ({ tracks }) => this.setState({ tracks, isLoading: false }),
-        error => {
-          this.setState({ isLoading: false });
-          throw new Error(error);
-        }
-      );
+  pause = currentId => () => {
+    this.setState({ currentId: undefined });
+  };
+
+  play = currentId => () => {
+    this.setState({ currentId });
   };
 
   render() {
-    const { tracks, isLoading } = this.state;
-
+    const { tracks, isLoading, currentId } = this.state;
     return (
       <div className="topTracks">
         <h3 className="center">Top Tracks</h3>
@@ -37,10 +33,17 @@ class ArtistTopTracks extends React.Component {
           <Spinner className="center" />
         ) : (
           tracks &&
-          tracks.length > 0 &&
           tracks
-            .slice(0, 3)
-            .map(track => <Track key={track.id} track={track} />)
+            .slice(0, 10)
+            .map(track => (
+              <Track
+                key={track.id}
+                track={track}
+                play={this.play}
+                pause={this.pause}
+                currentId={currentId}
+              />
+            ))
         )}
       </div>
     );

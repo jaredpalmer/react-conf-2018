@@ -1,7 +1,7 @@
 import React from 'react';
-import { fetch } from '../fetch';
 import { Spinner } from '../components/Spinner';
 import ListItem from '../components/ListItem';
+import { fetchArtistRelatedArtistsJSON } from '../api';
 class ArtistRelatedArtists extends React.Component {
   state = {
     artists: [],
@@ -9,21 +9,15 @@ class ArtistRelatedArtists extends React.Component {
   };
 
   componentDidMount() {
-    this.getArtistRelated();
+    fetchArtistRelatedArtistsJSON(this.props.id).then(
+      artists => this.setState({ artists, isLoading: false }),
+      error => {
+        this.setState({ isLoading: false });
+        // throw new Error(error);
+        console.log(error);
+      }
+    );
   }
-
-  getArtistRelated = () => {
-    fetch(`https://api.spotify.com/v1/artists/${this.props.id}/related-artists`)
-      .then(res => res.json())
-      .then(
-        ({ artists }) => this.setState({ artists, isLoading: false }),
-        error => {
-          this.setState({ isLoading: false });
-          // throw new Error(error);
-          console.log(error);
-        }
-      );
-  };
 
   render() {
     const { artists, isLoading } = this.state;

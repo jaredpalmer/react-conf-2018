@@ -1,9 +1,9 @@
 import React from 'react';
-import { fetch } from '../fetch';
 import { Spinner } from '../components/Spinner';
 import IconPerson from '../components/IconPerson';
+import { fetchArtistJSON } from '../api';
 
-class Artist extends React.Component {
+class ArtistDetails extends React.Component {
   state = {
     artist: null,
     isLoading: true,
@@ -21,18 +21,12 @@ class Artist extends React.Component {
   }
 
   getData = () => {
-    this.getArtist();
-  };
-
-  getArtist = () => {
-    fetch(`https://api.spotify.com/v1/artists/${this.props.id}`)
-      .then(res => res.json())
-      .then(
-        artist => this.setState({ artist, isLoading: false }),
-        error => {
-          this.setState({ isLoading: false });
-        }
-      );
+    fetchArtistJSON(this.props.id).then(
+      artist => this.setState({ artist, isLoading: false }),
+      error => {
+        this.setState({ isLoading: false });
+      }
+    );
   };
 
   render() {
@@ -47,14 +41,19 @@ class Artist extends React.Component {
             {artist.images && artist.images.length > 0 ? (
               <img
                 className="artwork"
-                src={artist.images[0].url}
+                src={artist.images[2].url}
                 alt={artist.name}
               />
             ) : (
               <IconPerson />
             )}
 
-            <h1>{artist.name}</h1>
+            <div>
+              <h1>{artist.name}</h1>
+              <div className="meta">
+                {artist.followers.total.toLocaleString()} followers
+              </div>
+            </div>
           </div>
         ) : null}
       </React.Fragment>
@@ -62,4 +61,4 @@ class Artist extends React.Component {
   }
 }
 
-export default Artist;
+export default ArtistDetails;
