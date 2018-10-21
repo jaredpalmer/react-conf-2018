@@ -4,14 +4,12 @@ import { unstable_scheduleCallback } from 'scheduler';
 import { Spinner } from '../components/Spinner';
 import ListItem from '../components/ListItem';
 import { searchArtistsJSON } from '../api';
-import { trimExt } from 'upath';
 
 class Search extends React.Component {
   state = {
     value: '',
     asyncValue: '',
     isLoading: false,
-
     currentId: null,
   };
 
