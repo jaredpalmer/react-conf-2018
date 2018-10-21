@@ -11,12 +11,14 @@
     "newsapi": "^2.4.0",
     "node-sass-chokidar": "^1.3.4",
     "qs": "^6.5.2",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
+    "react": "^16.6.0-alpha.8af6728",
+    "react-cache": "^16.6.0-alpha.8af6728",
+    "react-dom": "^16.6.0-alpha.8af6728",
     "react-error-boundary": "^1.2.3",
     "react-scripts": "2.0.5",
     "react-simple-infinite-scroll": "^0.0.1",
     "react-waypoint": "^8.0.3",
+    "scheduler": "^0.10.0-alpha.8af6728",
     "the-platform": "^0.2.0"
   },
   "scripts": {

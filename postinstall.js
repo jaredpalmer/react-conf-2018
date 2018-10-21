@@ -33,11 +33,7 @@ function modifyWebpackAlias(webpackConfig) {
   if (!webpackConfig.includes(`alias: {'@common':`)) {
     webpackConfig = webpackConfig.replace(
       `alias: {`,
-      `alias: {'@common': paths.appSrc,
-       'react-dom': paths.appPath + '/vendor/react-dom',
-       react: paths.appPath + '/vendor/react',
-       'react-cache': paths.appPath + '/vendor/react-cache',
-       scheduler: paths.appPath + '/vendor/scheduler',`
+      `alias: {'@common': paths.appSrc,`
     );
   }
   return webpackConfig;
@@ -63,11 +59,7 @@ function modifyJestModulePath(jestConfig) {
       `moduleNameMapper: {`,
       `modulePaths: ['src/'],
       moduleNameMapper: {
-        "@common/(.*)": "<rootDir>/src/$1",
-        "react": "<rootDir>/vendor/react",
-        "react-dom": "<rootDir>/vendor/react-dom",
-        "scheduler/(.*)": "<rootDir>/vendor/scheduler/$1",
-        "react-cache": "<rootDir>/vendor/react-cache", `
+        "@common/(.*)": "<rootDir>/src/$1",`
     );
   }
   if (!jestConfig.includes(`'modulePaths',`)) {
@@ -85,4 +77,4 @@ patchFile(paths.webpackProd, modifyWebpackAlias);
 patchFile(paths.webpackDev, modifyWebpackPlugins);
 patchFile(paths.webpackProd, modifyWebpackPlugins);
 patchFile(paths.jestConfig, modifyJestModulePath);
-console.log('Done patching react-scripts-ts!');
+console.log('Done patching react-scripts!');
