@@ -1,14 +1,14 @@
 import React from 'react';
 
-export function codeSplitComponent(getComponent) {
-  return class AsyncComponent extends React.Component {
+export function codeSplitComponent(getComponent, Fallback) {
+  return class LazyComponent extends React.Component {
     static Component = null;
-    state = { Component: AsyncComponent.Component };
+    state = { Component: LazyComponent.Component };
 
     componentDidMount() {
       if (!this.state.Component) {
         getComponent().then(Component => {
-          AsyncComponent.Component = Component;
+          LazyComponent.Component = Component;
           this.setState({ Component });
         });
       }
@@ -19,7 +19,7 @@ export function codeSplitComponent(getComponent) {
       if (Component) {
         return <Component {...this.props} />;
       }
-      return null;
+      return Fallback ? <Fallback /> : null;
     }
   };
 }
