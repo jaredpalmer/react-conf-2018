@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { unstable_scheduleCallback } from 'scheduler';
-import { Spinner } from '../components/Spinner';
-import ListItem from '../components/ListItem';
+import { Spinner } from './Spinner';
+import ListItem from './ListItem';
 import { searchArtistsJSON } from '../api';
 
 class Search extends React.Component {
@@ -14,11 +14,13 @@ class Search extends React.Component {
   };
 
   search = query => {
-    this.setState({ isLoading: true });
-    searchArtistsJSON(query).then(
-      results => this.setState({ results, isLoading: false }),
-      error => console.log(error)
-    );
+    if (query.trim !== '') {
+      this.setState({ isLoading: true });
+      searchArtistsJSON(query).then(
+        results => this.setState({ results, isLoading: false }),
+        error => console.log(error)
+      );
+    }
   };
 
   handleChange = event => {

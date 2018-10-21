@@ -1,6 +1,6 @@
 import React from 'react';
-import { Spinner } from '../components/Spinner';
-import ListItem from '../components/ListItem';
+import { Spinner } from './Spinner';
+import ListItem from './ListItem';
 import { fetchArtistRelatedArtistsJSON } from '../api';
 class ArtistRelatedArtists extends React.Component {
   state = {

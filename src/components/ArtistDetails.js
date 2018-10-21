@@ -1,6 +1,6 @@
 import React from 'react';
-import { Spinner } from '../components/Spinner';
-import IconPerson from '../components/IconPerson';
+import { Spinner } from './Spinner';
+import IconPerson from './Icon/IconPerson';
 import { fetchArtistJSON } from '../api';
 
 class ArtistDetails extends React.Component {

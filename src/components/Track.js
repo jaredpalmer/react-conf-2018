@@ -1,7 +1,7 @@
 import React from 'react';
-import { Spinner } from '../components/Spinner';
-import IconPause from '../components/IconPause';
-import IconPlay from '../components/IconPlay';
+import { Spinner } from './Spinner';
+import IconPause from './Icon/IconPause';
+import IconPlay from './Icon/IconPlay';
 
 class Player extends React.Component {
   didMount = false;
