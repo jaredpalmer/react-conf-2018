@@ -10,24 +10,11 @@ class ArtistDetails extends React.Component {
   };
 
   componentDidMount() {
-    this.getData();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.id !== this.props.id) {
-      this.setState({ isLoading: true, artist: null });
-      this.getData();
-    }
-  }
-
-  getData = () => {
     fetchArtistJSON(this.props.id).then(
-      artist => this.setState({ artist, isLoading: false }),
-      error => {
-        this.setState({ isLoading: false });
-      }
+      artist => this.setState({ isLoading: false, artist }),
+      error => this.setState({ isLoading: false, error })
     );
-  };
+  }
 
   render() {
     const { artist, isLoading } = this.state;
