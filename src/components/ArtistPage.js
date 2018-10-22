@@ -13,7 +13,7 @@ class ArtistPage extends React.Component {
   render() {
     return (
       <div className="artist">
-        <ArtistDetails id={this.props.id} />
+        <ArtistDetails id={this.props.id} key={`artist-${this.props.id}`} />
         <ArtistTopTracks
           id={this.props.id}
           key={`topTracks-${this.props.id}`}
