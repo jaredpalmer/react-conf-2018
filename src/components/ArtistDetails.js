@@ -19,33 +19,33 @@ class ArtistDetails extends React.Component {
   render() {
     const { artist, isLoading } = this.state;
 
-    return (
-      <React.Fragment>
-        {isLoading ? (
-          <Spinner className="center" />
-        ) : artist ? (
-          <div className="heading row">
-            {artist.images && artist.images.length > 0 ? (
-              <img
-                className="artwork"
-                src={artist.images[2].url}
-                alt={artist.name}
-              />
-            ) : (
-              <IconPerson />
-            )}
-
-            <div>
-              <h1>{artist.name}</h1>
-              <div className="meta">
-                {artist.followers.total.toLocaleString()} followers
-              </div>
-            </div>
-          </div>
-        ) : null}
-      </React.Fragment>
+    return isLoading ? (
+      <Spinner className="center" />
+    ) : artist ? (
+      <ArtistHeader artist={artist} />
+    ) : (
+      'Something went wrong'
     );
   }
+}
+
+function ArtistHeader({ artist }) {
+  return (
+    <div className="heading row">
+      {artist.images && artist.images.length > 0 ? (
+        <img className="artwork" src={artist.images[2].url} alt={artist.name} />
+      ) : (
+        <IconPerson />
+      )}
+
+      <div>
+        <h1>{artist.name}</h1>
+        <div className="meta">
+          {artist.followers.total.toLocaleString()} followers
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default ArtistDetails;

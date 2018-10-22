@@ -6,6 +6,7 @@ import { codeSplitComponent } from './codeSplitComponent';
 import Nav from './components/Nav/Nav';
 import LoginLink from './components/Nav/LoginLink';
 import { Spinner } from './components/Spinner';
+import PlayerProvider from './components/PlayerProvider';
 
 const SearchPage = codeSplitComponent(() =>
   import('./components/SearchPage').then(mod => mod.default)
@@ -20,6 +21,13 @@ const AuthPage = codeSplitComponent(() =>
 class App extends React.Component {
   state = {};
   setUser = user => this.setState({ user });
+  pause = currentId => () => {
+    this.setState({ currentId: undefined });
+  };
+
+  play = currentId => () => {
+    this.setState({ currentId });
+  };
 
   componentDidMount() {
     if (getToken()) {
@@ -35,13 +43,20 @@ class App extends React.Component {
       <div className="app">
         {!token && <LoginLink />}
         <Suspense maxDuration={1000} fallback={<Spinner size="large" />}>
-          <Router>
-            <Nav default>
-              <SearchPage path="/" />
-              <AuthPage path="/callback" user={this.state.user} />
-              <ArtistPage path="/artist/:id" />
-            </Nav>
-          </Router>
+          <PlayerProvider>
+            <Router>
+              <Nav default>
+                <SearchPage path="/" />
+                <AuthPage path="/callback" user={this.state.user} />
+                <ArtistPage
+                  path="/artist/:id"
+                  play={this.play}
+                  pause={this.pause}
+                />
+                {/* <AlbumPage path="/album/:id" /> */}
+              </Nav>
+            </Router>
+          </PlayerProvider>
         </Suspense>
       </div>
     );

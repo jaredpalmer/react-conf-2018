@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { unstable_Suspense as Suspense } from 'react';
 
 import { unstable_scheduleCallback } from 'scheduler';
 import { Spinner } from './Spinner';
@@ -40,6 +40,7 @@ class Search extends React.Component {
     return (
       <div className="search">
         <input className="input" value={value} onChange={this.handleChange} />
+
         {isLoading ? (
           <Spinner size="large" />
         ) : results && results.length > 0 ? (

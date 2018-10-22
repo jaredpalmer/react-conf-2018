@@ -11,11 +11,7 @@ class ArtistRelatedArtists extends React.Component {
   componentDidMount() {
     fetchArtistRelatedArtistsJSON(this.props.id).then(
       artists => this.setState({ artists, isLoading: false }),
-      error => {
-        this.setState({ isLoading: false });
-        // throw new Error(error);
-        console.log(error);
-      }
+      error => this.setState({ error, isLoading: false })
     );
   }
 
@@ -32,7 +28,9 @@ class ArtistRelatedArtists extends React.Component {
             .map(item => (
               <ListItem to={`/artist/${item.id}`} key={item.id} item={item} />
             ))
-        ) : null}
+        ) : (
+          'Something went wrong'
+        )}
       </div>
     );
   }

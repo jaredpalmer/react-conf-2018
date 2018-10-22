@@ -16,25 +16,17 @@ class ArtistTopTracks extends React.Component {
     );
   }
 
-  pause = currentId => () => {
-    this.setState({ currentId: undefined });
-  };
-
-  play = currentId => () => {
-    this.setState({ currentId });
-  };
-
   render() {
     const { tracks, isLoading, currentId } = this.state;
     return (
       <div className="topTracks">
-        <h3 className="center">Top Tracks</h3>
+        <h3>Top Tracks</h3>
         {isLoading ? (
           <Spinner className="center" />
         ) : (
           tracks &&
           tracks
-            .slice(0, 10)
+            .slice(0, 3)
             .map(track => (
               <Track
                 key={track.id}

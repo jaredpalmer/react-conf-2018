@@ -1,8 +1,8 @@
 import React from 'react';
-import ArtistDetails from './ArtistDetails';
 import ArtistTopTracks from './ArtistTopTracks';
+import ArtistDetails from './ArtistDetails';
 import ArtistRelatedArtists from './ArtistRelatedArtists';
-
+import ArtistAlbums from './ArtistAlbums';
 class ArtistPage extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.id !== this.props.id) {
@@ -18,6 +18,7 @@ class ArtistPage extends React.Component {
           id={this.props.id}
           key={`topTracks-${this.props.id}`}
         />
+        <ArtistAlbums id={this.props.id} key={`albums-${this.props.id}`} />
         <ArtistRelatedArtists
           id={this.props.id}
           key={`related-${this.props.id}`}

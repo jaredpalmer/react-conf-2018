@@ -1,6 +1,6 @@
 import React from 'react';
 
-function IconPause() {
+function IconPause(props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,6 +8,7 @@ function IconPause() {
       height="32"
       className="avatar"
       style={{ borderRadius: 0, height: 24 }}
+      {...props}
       viewBox="0 0 32 32"
     >
       <g

@@ -71,6 +71,8 @@ h6 {
 .app {
   background: $white;
   height: 100%;
+  max-width: 700px;
+  margin: 0 auto;
 
   h1,
   h2,
@@ -86,7 +88,7 @@ h6 {
   }
 
   .search {
-    max-width: 500px;
+
     margin: 0 auto;
     padding: 1rem;
     box-sizing: border-box;
@@ -103,7 +105,7 @@ h6 {
     }
 
     .empty {
-      max-width: 500px;
+
       margin: 2rem auto;
       font-weight: bold;
       text-align: center;
@@ -114,7 +116,8 @@ h6 {
 
   .nav {
     border-bottom: 1px solid $light;
-    padding: 1rem;
+    height: 50px;
+    padding: 0 1rem;
     position: fixed;
     top: 0;
     left: 0;
@@ -134,7 +137,7 @@ h6 {
   }
 
   .item {
-    padding: 1rem;
+    padding: 1rem .5rem;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -154,13 +157,14 @@ h6 {
     }
 
     .name {
-      font-size: 14px;
-      font-weight: 500;
+      font-size: 1.25rem;
+      font-weight: bold;
       margin-bottom: .25rem;
       word-wrap: none;
       max-width: 320px;
       overflow: hidden;
       text-overflow: ellipsis;
+      color: $black;
     }
 
     .meta {
@@ -172,11 +176,12 @@ h6 {
 
   .artist {
     padding: 1rem;
-    max-width: 500px;
+
     margin: 0 auto;
 
     h3 {
       margin: 3rem 0 2rem;
+      font-size: 1.5rem;
       // text-align: center;
     }
 
@@ -185,14 +190,81 @@ h6 {
 
     }
 
-    .artwork {
-      margin-right: 2rem;
-      width: 150px;
-      border-radius: 50%;
 
-    }
 
-    .topTracks {}
+
   }
 
+}
+
+.artwork {
+  margin-right: 2rem;
+  height: 100px;
+  width: 100px;
+  object-fit: contain;
+  border: 1px solid #eee;
+  border-radius: 50%;
+}
+
+.album-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 1rem;
+  grid-row-gap: 3rem;
+}
+
+@media (min-width: 500px) {
+  .album-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+
+
+.album-artwork {
+  position: relative;
+  color: $black;
+}
+
+.album-image {
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .2), 0 8px 15px rgba(0, 0, 0, .2);
+  object-fit: cover;
+  height: 200px;
+  vertical-align: middle;
+  transition: transform 150ms ease-in;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+}
+
+@media (min-width: 600px) {
+  .album-image {
+    height: 275px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .album-image {
+    height: 300px;
+  }
+}
+
+.album-title {
+  font-size: 1rem;
+  margin: 1rem 0 .25rem;
+  font-weight: 800;
+}
+
+.album-meta {
+  font-size: .75rem;
+  text-transform: uppercase;
+  color: $dark;
+}
+
+svg {
+  vertical-align: middle;
 }
