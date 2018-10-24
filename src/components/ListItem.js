@@ -17,9 +17,9 @@ function ListItem({ item, to, onClick, currentId }) {
       <div className="item" key={item.id}>
         {item.images &&
         item.images.length > 0 &&
-        item.images[2] &&
-        item.images[2].url ? (
-          <img className="artwork" src={item.images[1].url} alt={item.name} />
+        item.images[0] &&
+        item.images[0].url ? (
+          <img className="artwork" src={item.images[0].url} alt={item.name} />
         ) : (
           <IconPerson className="artwork" />
         )}

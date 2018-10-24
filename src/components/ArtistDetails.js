@@ -33,7 +33,7 @@ function ArtistHeader({ artist }) {
   return (
     <div className="heading row">
       {artist.images && artist.images.length > 0 ? (
-        <img className="artwork" src={artist.images[2].url} alt={artist.name} />
+        <img className="artwork" src={artist.images[0].url} alt={artist.name} />
       ) : (
         <IconPerson />
       )}
