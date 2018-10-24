@@ -1,4 +1,4 @@
-/** @license React v16.5.2
+/** @license React v16.6.0
  * scheduler-tracing.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -16,12 +16,6 @@ if (process.env.NODE_ENV !== "production") {
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
-
-// Exports ReactDOM.createRoot
-
-
-// Suspense
-
 
 // Helps identify side effects in begin-phase lifecycle hooks and setState reducers:
 
@@ -53,6 +47,10 @@ var enableSchedulerTracing = true;
 
 // React Fire: prevent the value and checked attributes from syncing
 // with their related DOM properties
+
+
+// These APIs will no longer be "unstable" in the upcoming 16.7 release,
+// Control this behavior with a flag to support 16.6 minor releases in the meanwhile.
 
 var DEFAULT_THREAD_ID = 0;
 

@@ -1,4 +1,4 @@
-/** @license React v16.5.2
+/** @license React v16.6.0
  * react-cache.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -18,6 +18,7 @@ if (process.env.NODE_ENV !== "production") {
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var React = require('react');
+var scheduler = require('scheduler');
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -108,252 +109,250 @@ var warningWithoutStack = function () {};
 
 var warningWithoutStack$1 = warningWithoutStack;
 
-function noop() {}
+function createLRU(limit) {
+  var LIMIT = limit;
 
-var Empty = 0;
-var Pending = 1;
-var Resolved = 2;
-var Rejected = 3;
+  // Circular, doubly-linked list
+  var first = null;
+  var size = 0;
 
-// TODO: How do you express this type with Flow?
+  var cleanUpIsScheduled = false;
 
-
-var CACHE_TYPE = void 0;
-{
-  CACHE_TYPE = 0xcac4e;
-}
-
-var isCache = void 0;
-{
-  isCache = function (value) {
-    return value !== null && typeof value === 'object' && value.$$typeof === CACHE_TYPE;
-  };
-}
-
-// TODO: Make this configurable per resource
-var MAX_SIZE = 500;
-var PAGE_SIZE = 50;
-
-function createRecord(key) {
-  return {
-    status: Empty,
-    suspender: null,
-    key: key,
-    value: null,
-    error: null,
-    next: null,
-    previous: null
-  };
-}
-
-function createRecordCache() {
-  return {
-    map: new Map(),
-    head: null,
-    tail: null,
-    size: 0
-  };
-}
-
-function createCache(invalidator) {
-  var resourceMap = new Map();
-
-  function accessRecord(resourceType, key) {
-    {
-      !(typeof resourceType !== 'string' && typeof resourceType !== 'number') ? warningWithoutStack$1(false, 'Invalid resourceType: Expected a symbol, object, or function, but ' + 'instead received: %s. Strings and numbers are not permitted as ' + 'resource types.', resourceType) : void 0;
+  function scheduleCleanUp() {
+    if (cleanUpIsScheduled === false && size > LIMIT) {
+      // The cache size exceeds the limit. Schedule a callback to delete the
+      // least recently used entries.
+      cleanUpIsScheduled = true;
+      scheduler.unstable_scheduleCallback(cleanUp);
     }
+  }
 
-    var recordCache = resourceMap.get(resourceType);
-    if (recordCache === undefined) {
-      recordCache = createRecordCache();
-      resourceMap.set(resourceType, recordCache);
-    }
-    var map = recordCache.map;
+  function cleanUp() {
+    cleanUpIsScheduled = false;
+    deleteLeastRecentlyUsedEntries(LIMIT);
+  }
 
-    var record = map.get(key);
-    if (record === undefined) {
-      // This record does not already exist. Create a new one.
-      record = createRecord(key);
-      map.set(key, record);
-      if (recordCache.size >= MAX_SIZE) {
-        // The cache is already at maximum capacity. Remove PAGE_SIZE least
-        // recently used records.
-        // TODO: We assume the max capcity is greater than zero. Otherwise warn.
-        var _tail = recordCache.tail;
-        if (_tail !== null) {
-          var newTail = _tail;
-          for (var i = 0; i < PAGE_SIZE && newTail !== null; i++) {
-            recordCache.size -= 1;
-            map.delete(newTail.key);
-            newTail = newTail.previous;
-          }
-          recordCache.tail = newTail;
-          if (newTail !== null) {
-            newTail.next = null;
-          }
+  function deleteLeastRecentlyUsedEntries(targetSize) {
+    // Delete entries from the cache, starting from the end of the list.
+    if (first !== null) {
+      var resolvedFirst = first;
+      var last = resolvedFirst.previous;
+      while (size > targetSize && last !== null) {
+        var _onDelete = last.onDelete;
+        var _previous = last.previous;
+        last.onDelete = null;
+
+        // Remove from the list
+        last.previous = last.next = null;
+        if (last === first) {
+          // Reached the head of the list.
+          first = last = null;
+        } else {
+          first.previous = _previous;
+          _previous.next = first;
+          last = _previous;
         }
-      }
-    } else {
-      // This record is already cached. Remove it from its current position in
-      // the list. We'll add it to the front below.
-      var _previous = record.previous;
-      var _next = record.next;
-      if (_previous !== null) {
-        _previous.next = _next;
-      } else {
-        recordCache.head = _next;
-      }
-      if (_next !== null) {
-        _next.previous = _previous;
-      } else {
-        recordCache.tail = _previous;
-      }
-      recordCache.size -= 1;
-    }
 
-    // Add the record to the front of the list.
-    var head = recordCache.head;
-    var newHead = record;
-    recordCache.head = newHead;
-    newHead.previous = null;
-    newHead.next = head;
-    if (head !== null) {
-      head.previous = newHead;
-    } else {
-      recordCache.tail = newHead;
-    }
-    recordCache.size += 1;
+        size -= 1;
 
-    return newHead;
+        // Call the destroy method after removing the entry from the list. If it
+        // throws, the rest of cache will not be deleted, but it will be in a
+        // valid state.
+        _onDelete();
+      }
+    }
   }
 
-  function load(emptyRecord, suspender) {
-    var pendingRecord = emptyRecord;
-    pendingRecord.status = Pending;
-    pendingRecord.suspender = suspender;
-    suspender.then(function (value) {
-      // Resource loaded successfully.
-      var resolvedRecord = pendingRecord;
-      resolvedRecord.status = Resolved;
-      resolvedRecord.suspender = null;
-      resolvedRecord.value = value;
-    }, function (error) {
-      // Resource failed to load. Stash the error for later so we can throw it
-      var rejectedRecord = pendingRecord;
-      rejectedRecord.status = Rejected;
-      rejectedRecord.suspender = null;
-      rejectedRecord.error = error;
-    });
+  function add(value, onDelete) {
+    var entry = {
+      value: value,
+      onDelete: onDelete,
+      next: null,
+      previous: null
+    };
+    if (first === null) {
+      entry.previous = entry.next = entry;
+      first = entry;
+    } else {
+      // Append to head
+      var last = first.previous;
+      last.next = entry;
+      entry.previous = last;
+
+      first.previous = entry;
+      entry.next = first;
+
+      first = entry;
+    }
+    size += 1;
+    return entry;
   }
 
-  var cache = {
-    invalidate: function () {
-      invalidator();
-    },
-    preload: function (resourceType, key, miss, missArg) {
-      var record = accessRecord(resourceType, key);
-      switch (record.status) {
-        case Empty:
-          // Warm the cache.
-          var _suspender = miss(missArg);
-          load(record, _suspender);
-          return;
-        case Pending:
-          // There's already a pending request.
-          return;
-        case Resolved:
-          // The resource is already in the cache.
-          return;
-        case Rejected:
-          // The request failed.
-          return;
+  function update(entry, newValue) {
+    entry.value = newValue;
+  }
+
+  function access(entry) {
+    var next = entry.next;
+    if (next !== null) {
+      // Entry already cached
+      var resolvedFirst = first;
+      if (first !== entry) {
+        // Remove from current position
+        var _previous2 = entry.previous;
+        _previous2.next = next;
+        next.previous = _previous2;
+
+        // Append to head
+        var last = resolvedFirst.previous;
+        last.next = entry;
+        entry.previous = last;
+
+        resolvedFirst.previous = entry;
+        entry.next = resolvedFirst;
+
+        first = entry;
       }
-    },
-    read: function (resourceType, key, miss, missArg) {
-      var record = accessRecord(resourceType, key);
-      switch (record.status) {
-        case Empty:
-          // Load the requested resource.
-          var _suspender2 = miss(missArg);
-          load(record, _suspender2);
-          throw _suspender2;
-        case Pending:
-          // There's already a pending request.
-          throw record.suspender;
-        case Resolved:
-          return record.value;
-        case Rejected:
-        default:
-          // The requested resource previously failed loading.
-          var _error = record.error;
-          throw _error;
-      }
+    } else {
+      // Cannot access a deleted entry
+      // TODO: Error? Warning?
     }
+    scheduleCleanUp();
+    return entry.value;
+  }
+
+  function setLimit(newLimit) {
+    LIMIT = newLimit;
+    scheduleCleanUp();
+  }
+
+  return {
+    add: add,
+    update: update,
+    access: access,
+    setLimit: setLimit
   };
+}
 
+var Pending = 0;
+var Resolved = 1;
+var Rejected = 2;
+
+var currentOwner = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
+
+function readContext(Context, observedBits) {
+  var dispatcher = currentOwner.currentDispatcher;
+  if (dispatcher === null) {
+    throw new Error('react-cache: read and preload may only be called from within a ' + "component's render. They are not supported in event handlers or " + 'lifecycle methods.');
+  }
+  return dispatcher.readContext(Context, observedBits);
+}
+
+function identityHashFn(input) {
   {
-    cache.$$typeof = CACHE_TYPE;
+    !(typeof input === 'string' || typeof input === 'number' || typeof input === 'boolean' || input === undefined || input === null) ? warningWithoutStack$1(false, 'Invalid key type. Expected a string, number, symbol, or boolean, ' + 'but instead received: %s' + '\n\nTo use non-primitive values as keys, you must pass a hash ' + 'function as the second argument to createResource().', input) : void 0;
   }
-  return cache;
+  return input;
 }
 
-var warnIfNonPrimitiveKey = void 0;
-{
-  warnIfNonPrimitiveKey = function (key, methodName) {
-    !(typeof key === 'string' || typeof key === 'number' || typeof key === 'boolean' || key === undefined || key === null) ? warningWithoutStack$1(false, '%s: Invalid key type. Expected a string, number, symbol, or boolean, ' + 'but instead received: %s' + '\n\nTo use non-primitive values as keys, you must pass a hash ' + 'function as the second argument to createResource().', methodName, key) : void 0;
-  };
+var CACHE_LIMIT = 500;
+var lru = createLRU(CACHE_LIMIT);
+
+var entries = new Map();
+
+var CacheContext = React.createContext(null);
+
+function accessResult(resource, fetch, input, key) {
+  var entriesForResource = entries.get(resource);
+  if (entriesForResource === undefined) {
+    entriesForResource = new Map();
+    entries.set(resource, entriesForResource);
+  }
+  var entry = entriesForResource.get(key);
+  if (entry === undefined) {
+    var thenable = fetch(input);
+    thenable.then(function (value) {
+      if (newResult.status === Pending) {
+        var resolvedResult = newResult;
+        resolvedResult.status = Resolved;
+        resolvedResult.value = value;
+      }
+    }, function (error) {
+      if (newResult.status === Pending) {
+        var rejectedResult = newResult;
+        rejectedResult.status = Rejected;
+        rejectedResult.value = error;
+      }
+    });
+    var newResult = {
+      status: Pending,
+      value: thenable
+    };
+    var newEntry = lru.add(newResult, deleteEntry.bind(null, resource, key));
+    entriesForResource.set(key, newEntry);
+    return newResult;
+  } else {
+    return lru.access(entry);
+  }
 }
 
-// These declarations are used to express function overloading. I wish there
-// were a more elegant way to do this in the function definition itself.
+function deleteEntry(resource, key) {
+  var entriesForResource = entries.get(resource);
+  if (entriesForResource !== undefined) {
+    entriesForResource.delete(key);
+    if (entriesForResource.size === 0) {
+      entries.delete(resource);
+    }
+  }
+}
 
-// Primitive keys do not request a hash function.
+function unstable_createResource(fetch, maybeHashInput) {
+  var hashInput = maybeHashInput !== undefined ? maybeHashInput : identityHashFn;
 
-
-// Non-primitive keys *do* require a hash function.
-// eslint-disable-next-line no-redeclare
-
-
-// eslint-disable-next-line no-redeclare
-function createResource(loadResource, hash) {
   var resource = {
-    read: function (cache, key) {
-      {
-        !isCache(cache) ? warningWithoutStack$1(false, 'read(): The first argument must be a cache. Instead received: %s', cache) : void 0;
+    read: function (input) {
+      // react-cache currently doesn't rely on context, but it may in the
+      // future, so we read anyway to prevent access outside of render.
+      readContext(CacheContext);
+      var key = hashInput(input);
+      var result = accessResult(resource, fetch, input, key);
+      switch (result.status) {
+        case Pending:
+          {
+            var suspender = result.value;
+            throw suspender;
+          }
+        case Resolved:
+          {
+            var _value = result.value;
+            return _value;
+          }
+        case Rejected:
+          {
+            var error = result.value;
+            throw error;
+          }
+        default:
+          // Should be unreachable
+          return undefined;
       }
-      if (hash === undefined) {
-        {
-          warnIfNonPrimitiveKey(key, 'read');
-        }
-        return cache.read(resource, key, loadResource, key);
-      }
-      var hashedKey = hash(key);
-      return cache.read(resource, hashedKey, loadResource, key);
     },
-    preload: function (cache, key) {
-      {
-        !isCache(cache) ? warningWithoutStack$1(false, 'preload(): The first argument must be a cache. Instead received: %s', cache) : void 0;
-      }
-      if (hash === undefined) {
-        {
-          warnIfNonPrimitiveKey(key, 'preload');
-        }
-        cache.preload(resource, key, loadResource, key);
-        return;
-      }
-      var hashedKey = hash(key);
-      cache.preload(resource, hashedKey, loadResource, key);
+    preload: function (input) {
+      // react-cache currently doesn't rely on context, but it may in the
+      // future, so we read anyway to prevent access outside of render.
+      readContext(CacheContext);
+      var key = hashInput(input);
+      accessResult(resource, fetch, input, key);
     }
   };
   return resource;
 }
 
-// Global cache has no eviction policy (except for, ya know, a browser refresh).
-var globalCache = createCache(noop);
-var ReactCache = React.createContext(globalCache);
+function unstable_setGlobalCacheLimit(limit) {
+  lru.setLimit(limit);
+}
 
-exports.createCache = createCache;
-exports.createResource = createResource;
-exports.ReactCache = ReactCache;
+exports.unstable_createResource = unstable_createResource;
+exports.unstable_setGlobalCacheLimit = unstable_setGlobalCacheLimit;
   })();
 }
