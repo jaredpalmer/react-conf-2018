@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function codeSplitComponent(getComponent, Fallback) {
+export function codeSplitComponent(getComponent) {
   return class LazyComponent extends React.Component {
     static Component = null;
     state = { Component: LazyComponent.Component };
@@ -19,7 +19,7 @@ export function codeSplitComponent(getComponent, Fallback) {
       if (Component) {
         return <Component {...this.props} />;
       }
-      return Fallback ? <Fallback /> : null;
+      return null;
     }
   };
 }

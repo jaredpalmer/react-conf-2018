@@ -6,10 +6,11 @@ import Nav from './components/Nav/Nav';
 import LoginLink from './components/Nav/LoginLink';
 import { Spinner } from './components/Spinner';
 import PlayerProvider from './components/PlayerProvider';
+import { codeSplitComponent } from './codeSplitComponent';
 
-const SearchPage = React.lazy(() => import('./components/SearchPage'));
-const ArtistPage = React.lazy(() => import('./components/ArtistPage'));
-const AuthPage = React.lazy(() => import('./components/AuthPage'));
+const SearchPage = codeSplitComponent(() => import('./components/SearchPage'));
+const ArtistPage = codeSplitComponent(() => import('./components/ArtistPage'));
+const AuthPage = codeSplitComponent(() => import('./components/AuthPage'));
 
 class App extends React.Component {
   state = {};
