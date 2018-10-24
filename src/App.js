@@ -8,9 +8,15 @@ import { Spinner } from './components/Spinner';
 import PlayerProvider from './components/PlayerProvider';
 import { codeSplitComponent } from './codeSplitComponent';
 
-const SearchPage = codeSplitComponent(() => import('./components/SearchPage'));
-const ArtistPage = codeSplitComponent(() => import('./components/ArtistPage'));
-const AuthPage = codeSplitComponent(() => import('./components/AuthPage'));
+const SearchPage = codeSplitComponent(() =>
+  import('./components/SearchPage').then(mod => mod.default)
+);
+const ArtistPage = codeSplitComponent(() =>
+  import('./components/ArtistPage').then(mod => mod.default)
+);
+const AuthPage = codeSplitComponent(() =>
+  import('./components/AuthPage').then(mod => mod.default)
+);
 
 class App extends React.Component {
   state = {};
