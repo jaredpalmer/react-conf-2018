@@ -1,26 +1,18 @@
-import React, { unstable_Suspense as Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Router } from '@reach/router';
 import { getToken } from './api/auth';
 import { fetchMeJSON } from './api';
-import { codeSplitComponent } from './codeSplitComponent';
 import Nav from './components/Nav/Nav';
 import LoginLink from './components/Nav/LoginLink';
 import { Spinner } from './components/Spinner';
 import PlayerProvider from './components/PlayerProvider';
 
-const SearchPage = codeSplitComponent(() =>
-  import('./components/SearchPage').then(mod => mod.default)
-);
-const ArtistPage = codeSplitComponent(() =>
-  import('./components/ArtistPage').then(mod => mod.default)
-);
-const AuthPage = codeSplitComponent(() =>
-  import('./components/AuthPage').then(mod => mod.default)
-);
+const SearchPage = React.lazy(() => import('./components/SearchPage'));
+const ArtistPage = React.lazy(() => import('./components/ArtistPage'));
+const AuthPage = React.lazy(() => import('./components/AuthPage'));
 
 class App extends React.Component {
   state = {};
-  setUser = user => this.setState({ user });
   pause = currentId => () => {
     this.setState({ currentId: undefined });
   };

@@ -1,4 +1,4 @@
-import React, { unstable_Suspense as Suspense } from 'react';
+import React from 'react';
 
 import { unstable_scheduleCallback } from 'scheduler';
 import { Spinner } from './Spinner';
