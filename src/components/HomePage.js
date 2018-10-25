@@ -8,7 +8,6 @@ import { IconSearch } from './Icon/IconSearch';
 
 class Search extends React.Component {
   state = {
-    value: '',
     isLoading: true,
     currentId: null,
   };
@@ -21,7 +20,7 @@ class Search extends React.Component {
   }
 
   render() {
-    const { isLoading, currentId, results, value } = this.state;
+    const { isLoading, currentId, results } = this.state;
 
     return (
       <div className="search">
