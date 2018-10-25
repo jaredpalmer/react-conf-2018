@@ -19,6 +19,7 @@ class PlayerProvider extends React.Component {
         this.setState({ isLoading: false, currentTrack, isPlaying: true });
         this.audio.play();
       };
+      document.body.appendChild(this.audio);
     } else {
       this.audio.play();
       this.setState({ isPlaying: true });

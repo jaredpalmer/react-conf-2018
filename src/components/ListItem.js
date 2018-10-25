@@ -25,7 +25,6 @@ function ListItem({ item, to, onClick, currentId }) {
         )}
         <div className="col flex-1">
           <div className="name">{item.name}</div>
-          <div className="meta">{item.type.toUpperCase()}</div>
         </div>
         <div>{currentId === item.id ? <Spinner /> : null}</div>
       </div>

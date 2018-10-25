@@ -9,12 +9,7 @@ export function IconSearch(props) {
       viewBox="0 0 16 16"
       {...props}
     >
-      <g
-        class="nc-icon-wrapper"
-        strokeWidth="2"
-        fill="#999"
-        stroke="#999"
-      >
+      <g className="nc-icon-wrapper" strokeWidth="2" fill="#999" stroke="#999">
         <circle
           fill="none"
           stroke="#999"

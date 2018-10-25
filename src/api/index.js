@@ -1,7 +1,12 @@
 import { fetch } from './auth';
 import uniqBy from 'lodash.uniqby';
 
-import { ArtistsJSON, ArtistListJSON, ArtistAlbumsJSON } from './data';
+import {
+  ArtistsJSON,
+  ArtistListJSON,
+  ArtistAlbumsJSON,
+  ArtistTopTracksJSON,
+} from './data';
 
 export async function fetchMeJSON() {
   const res = await fetch('https://api.spotify.com/v1/me');
@@ -23,12 +28,23 @@ export function fetchArtistAlbumsJSON(id) {
   );
 }
 
-export async function fetchArtistTopTracksJSON(id) {
-  const res = await fetch(
-    `https://api.spotify.com/v1/artists/${id}/top-tracks?market=US`
+export function fetchArtistTopTracksJSON(id) {
+  return makeFakeAPICall(
+    `/artists/${id}/top-tracks`,
+    uniqBy(ArtistTopTracksJSON[id], 'name')
   );
-  return (await res.json()).tracks;
 }
+
+export function searchArtistsJSON(query) {
+  return makeFakeAPICall(`/artists/search?=${query}`, ArtistListJSON);
+}
+
+// export async function fetchArtistTopTracksJSON(id) {
+//   const res = await fetch(
+//     `https://api.spotify.com/v1/artists/${id}/top-tracks?market=US`
+//   );
+//   return (await res.json()).tracks;
+// }
 
 // export async function fetchArtistJSON(id) {
 //   const res = await fetch(`https://api.spotify.com/v1/artists/${id}`);
@@ -42,13 +58,13 @@ export async function fetchArtistRelatedArtistsJSON(id) {
   return (await res.json()).artists;
 }
 
-export async function searchArtistsJSON(query) {
-  const res = await fetch(
-    `https://api.spotify.com/v1/search?q=${query.trim()}&type=artist,album`
-  );
-  const { artists } = await res.json();
-  return artists && artists.items ? artists.items : [];
-}
+// export async function searchArtistsJSON(query) {
+//   const res = await fetch(
+//     `https://api.spotify.com/v1/search?q=${query.trim()}&type=artist,album`
+//   );
+//   const { artists } = await res.json();
+//   return artists && artists.items ? artists.items : [];
+// }
 
 // export async function fetchArtistAlbumsJSON(id) {
 //   const res = await fetch(`https://api.spotify.com/v1/artists/${id}/albums`);

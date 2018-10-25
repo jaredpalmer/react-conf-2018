@@ -56,9 +56,7 @@ class Search extends React.Component {
             />
           ))
         ) : (
-          <div className="empty">
-            No Results Found. Search for artists.
-          </div>
+          <div className="empty">No Results Found. Search for artists.</div>
         )}
       </div>
     );
