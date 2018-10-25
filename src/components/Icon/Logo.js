@@ -6,7 +6,7 @@ export function Logo(props) {
     <div
       className="row"
       style={{
-        margin: '0 auto',
+        margin: '0 auto 3rem',
         maxWidth: 220,
         justifyContent: 'flex-start',
       }}

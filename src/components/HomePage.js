@@ -4,31 +4,21 @@ import { Spinner } from './Spinner';
 import ListItem from './ListItem';
 import { searchArtistsJSON } from '../api';
 import { Logo } from './Icon/Logo';
-import { debounce } from './utils';
 import { IconSearch } from './Icon/IconSearch';
 
 class Search extends React.Component {
   state = {
     value: '',
-    isLoading: false,
+    isLoading: true,
     currentId: null,
   };
 
-  search = debounce(query => {
-    if (query.trim !== '') {
-      this.setState({ isLoading: true });
-      searchArtistsJSON(query).then(
-        results => this.setState({ results, isLoading: false }),
-        error => console.log(error)
-      );
-    }
-  }, 150);
-
-  handleChange = e => {
-    e.persist();
-    this.setState({ value: e.target.value });
-    this.search(e.target.value);
-  };
+  componentDidMount() {
+    searchArtistsJSON().then(
+      results => this.setState({ results, isLoading: false }),
+      error => console.log(error)
+    );
+  }
 
   render() {
     const { isLoading, currentId, results, value } = this.state;
@@ -36,13 +26,6 @@ class Search extends React.Component {
     return (
       <div className="search">
         <Logo />
-        <SearchInput
-          placeholder="Search for artists"
-          className="input"
-          value={value}
-          onChange={this.handleChange}
-        />
-
         {isLoading ? (
           <Spinner size="large" />
         ) : results && results.length > 0 ? (

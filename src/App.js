@@ -7,8 +7,8 @@ import LoginLink from './components/Nav/LoginLink';
 import PlayerProvider from './components/PlayerProvider';
 import { codeSplitComponent } from './codeSplitComponent';
 
-const SearchPage = codeSplitComponent(() =>
-  import('./components/SearchPage').then(mod => mod.default)
+const HomePage = codeSplitComponent(() =>
+  import('./components/HomePage').then(mod => mod.default)
 );
 const ArtistPage = codeSplitComponent(() =>
   import('./components/ArtistPage').then(mod => mod.default)
@@ -44,7 +44,7 @@ class App extends React.Component {
         <PlayerProvider>
           <Router>
             <Nav default>
-              <SearchPage path="/" />
+              <HomePage path="/" />
               <AuthPage path="/callback" user={this.state.user} />
               <ArtistPage
                 path="/artist/:id"

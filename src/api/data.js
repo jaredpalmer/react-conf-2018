@@ -8,16 +8,16 @@ export const ArtistListJSON = [
     name: 'Big Sean',
   },
   {
-    id: 'jcole',
-    name: 'J. Cole',
+    id: 'ken',
+    name: 'Ken Wheeler',
   },
   {
     id: 'wale',
     name: 'Wale',
   },
   {
-    id: 'guccimane',
-    name: 'Gucci Mane',
+    id: 'jcole',
+    name: 'J. Cole',
   },
 ];
 
@@ -144,18 +144,18 @@ export const ArtistsJSON = {
     images: [
       {
         height: 640,
-        url: 'https://i.scdn.co/image/839defbfdeb72488b3b495e2c4e89990933f0167',
+        url: '/img/jcole/avatar-hd.jpeg',
         width: 640,
       },
       {
         height: 320,
-        url: 'https://i.scdn.co/image/df0424ed9e3fd02f3c5a98dedd4307adb3df4eb3',
+        url: 'https://i.scdn.co/image/55e3fb26d67b4d71321440b3a440eecd9d8f20f7',
         width: 320,
       },
       {
-        height: 160,
-        url: 'https://i.scdn.co/image/6c27976d222131de69da808b86c19c78859c1be0',
-        width: 160,
+        height: 64,
+        url: '/img/jcole/avatar.jpeg',
+        width: 64,
       },
     ],
     name: 'J. Cole',
@@ -253,7 +253,7 @@ export const ArtistAlbumsJSON = {
       images: [
         {
           height: 640,
-          url: '/img/bigsean/double-hd.jpg',
+          url: '/img/bigsean/double-hd.jpeg',
           width: 640,
         },
         {
@@ -264,7 +264,7 @@ export const ArtistAlbumsJSON = {
         },
         {
           height: 64,
-          url: '/img/bigsean/double.jpg',
+          url: '/img/bigsean/double.jpeg',
           width: 64,
         },
       ],
