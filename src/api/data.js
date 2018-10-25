@@ -15,10 +15,6 @@ export const ArtistListJSON = [
     id: 'wale',
     name: 'Wale',
   },
-  {
-    id: 'jcole',
-    name: 'J. Cole',
-  },
 ];
 
 export const ArtistTopTracksJSON = {
