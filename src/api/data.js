@@ -92,6 +92,11 @@ export const ArtistsJSON = {
     name: 'Drake',
     popularity: 100,
     type: 'artist',
+    concert: {
+      venue: 'Oracle Arena',
+      cityState: 'Oakland, CA',
+      date: 'October 26th @ 7:00PM',
+    },
   },
   bigsean: {
     followers: {

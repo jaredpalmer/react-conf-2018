@@ -284,6 +284,35 @@ svg {
 }
 
 
+.artist-concerts {
+
+  h4 {
+    margin-bottom: .5rem;
+  }
+
+  button {
+    background: $accent;
+    color: #fff;
+    text-transform: uppercase;
+    border: 0;
+    font-size: 1rem;
+    padding: .5rem 1rem;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: all .2s ease;
+    cursor: pointer;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
+
+  .row {
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
 
 
 

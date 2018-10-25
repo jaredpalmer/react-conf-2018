@@ -22,7 +22,10 @@ class ArtistDetails extends React.Component {
     return isLoading ? (
       <Spinner className="center" />
     ) : artist ? (
-      <ArtistHeader artist={artist} />
+      <div>
+        <ArtistHeader artist={artist} />
+        <ArtistConcerts artist={artist} />
+      </div>
     ) : (
       'Something went wrong'
     );
@@ -46,6 +49,30 @@ function ArtistHeader({ artist }) {
       </div>
     </div>
   );
+}
+
+class ArtistConcerts extends React.Component {
+  handleClick = () => {
+    window.FakeStripe.charge();
+  };
+
+  render() {
+    const { concert } = this.props.artist;
+    return concert ? (
+      <div className="artist-concerts">
+        <h3>Next Concert</h3>
+        <div className="row ">
+          <div>
+            <h4>{concert.venue}</h4>
+            <div>
+              {concert.cityState}, {concert.date}
+            </div>
+          </div>
+          <button onClick={this.handleClick}>Buy Tickets</button>
+        </div>
+      </div>
+    ) : null;
+  }
 }
 
 export default ArtistDetails;

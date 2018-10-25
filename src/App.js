@@ -19,7 +19,7 @@ const AuthPage = codeSplitComponent(() =>
 
 class App extends React.Component {
   state = {};
-  pause = currentId => () => {
+  pause = () => () => {
     this.setState({ currentId: undefined });
   };
 
