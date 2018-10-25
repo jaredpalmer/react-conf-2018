@@ -23,7 +23,7 @@
     "the-platform": "^0.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node fakeServer | react-scripts start",
     "postinstall": "node postinstall.js",
     "build": "react-scripts build",
     "test": "react-scripts test",

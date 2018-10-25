@@ -50,7 +50,7 @@ function AlbumItem({ album }) {
         <div className="album-artwork">
           <img
             className="album-image"
-            src={album.images[1].url}
+            src={album.images[0].url}
             alt={album.name}
           />
           <div className="album-title center">{album.name}</div>
