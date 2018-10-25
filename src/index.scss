@@ -31,7 +31,7 @@ $black: #000;
 $dark: #555;
 $light: #ddd;
 $white: #fff;
-$accent: rgb(34, 162, 70);
+$accent: #00a1ff;
 
 img {
   width: 100%;
@@ -93,15 +93,27 @@ h6 {
     padding: 1rem;
     box-sizing: border-box;
 
+    h1 {
+      text-align: center;
+      display: block;
+    }
+
     .input {
       margin: 2rem 0;
       width: 100%;
       padding: .5rem 1rem;
-      border-radius: 2px;
+      border-radius: 4px;
       font-size: 1.25rem;
       display: block;
-      border: 1px solid #bbb;
+      background: #f8f8f8;
+      border: 1px solid #ccc;
       box-sizing: border-box;
+
+      &:focus {
+        background: #fff;
+        outline: 0;
+        border: 1px solid #00a1ff;
+      }
     }
 
     .empty {
@@ -204,6 +216,7 @@ h6 {
   object-fit: contain;
   border: 1px solid #eee;
   border-radius: 50%;
+  z-index: 2;
 }
 
 .album-grid {
@@ -224,6 +237,7 @@ h6 {
 .album-artwork {
   position: relative;
   color: $black;
+
 }
 
 .album-image {

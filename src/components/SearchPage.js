@@ -1,19 +1,20 @@
 import React from 'react';
 
-import { unstable_scheduleCallback } from 'scheduler';
 import { Spinner } from './Spinner';
 import ListItem from './ListItem';
 import { searchArtistsJSON } from '../api';
+import { Logo } from './Icon/Logo';
+import { debounce } from './utils';
+import { IconSearch } from './Icon/IconSearch';
 
 class Search extends React.Component {
   state = {
     value: '',
-    asyncValue: '',
     isLoading: false,
     currentId: null,
   };
 
-  search = query => {
+  search = debounce(query => {
     if (query.trim !== '') {
       this.setState({ isLoading: true });
       searchArtistsJSON(query).then(
@@ -21,17 +22,12 @@ class Search extends React.Component {
         error => console.log(error)
       );
     }
-  };
+  }, 150);
 
-  handleChange = event => {
-    event.persist();
-    this.setState({ value: event.target.value });
-    // Search with the new hip, low-priority version of state
-    unstable_scheduleCallback(() => {
-      this.setState({ asyncValue: event.target.value }, () =>
-        this.search(this.state.asyncValue)
-      );
-    });
+  handleChange = e => {
+    e.persist();
+    this.setState({ value: e.target.value });
+    this.search(e.target.value);
   };
 
   render() {
@@ -39,7 +35,13 @@ class Search extends React.Component {
 
     return (
       <div className="search">
-        <input className="input" value={value} onChange={this.handleChange} />
+        <Logo />
+        <SearchInput
+          placeholder="Search for artists"
+          className="input"
+          value={value}
+          onChange={this.handleChange}
+        />
 
         {isLoading ? (
           <Spinner size="large" />
@@ -54,11 +56,30 @@ class Search extends React.Component {
             />
           ))
         ) : (
-          <div className="empty">No Results Found. Search for artists.</div>
+          <div className="empty">
+            No Results Found. Search for artists.
+          </div>
         )}
       </div>
     );
   }
+}
+
+export function SearchInput(props) {
+  return (
+    <div style={{ position: 'relative' }}>
+      <IconSearch
+        style={{
+          position: 'absolute',
+          height: 16,
+          width: 16,
+          top: 12,
+          left: 10,
+        }}
+      />
+      <input {...props} style={{ paddingLeft: 36 }} />
+    </div>
+  );
 }
 
 export default Search;
