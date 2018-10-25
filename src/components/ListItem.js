@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from '@reach/router';
 import { Spinner } from './Spinner';
-import IconPerson from './Icon/IconPerson';
 
 function ListItem({ item, to, onClick, currentId }) {
   return (
