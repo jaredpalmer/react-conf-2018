@@ -41,10 +41,7 @@ class App extends React.Component {
     return (
       <div className="app">
         {!token && <LoginLink />}
-        <Suspense
-          maxDuration={1000}
-          fallback={<Spinner size="large" />}
-        >
+        <Suspense maxDuration={1000} fallback={<Spinner size="large" />}>
           <PlayerProvider>
             <Router>
               <Nav default>
