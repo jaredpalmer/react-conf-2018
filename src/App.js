@@ -15,7 +15,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
-        <PlayerProvider>
+        <PlayerProvider key={this.props.latency}>
           <Router>
             <Nav default>
               <HomePage path="/" />

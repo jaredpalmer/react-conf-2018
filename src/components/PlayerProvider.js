@@ -10,19 +10,24 @@ class PlayerProvider extends React.Component {
 
   play = currentTrack => () => {
     if (currentTrack !== this.state.currentTrack) {
+      this.setState({ isLoading: true, currentTrack });
       if (this.audio) {
         this.audio.pause();
+        this.setState({ isPlaying: false });
       }
       this.audio = new Audio(currentTrack.preview_url);
-      this.setState({ isLoading: true });
       this.audio.onloadeddata = () => {
-        this.setState({ isLoading: false, currentTrack, isPlaying: true });
+        this.setState({
+          isLoading: false,
+          currentTrack,
+          isPlaying: true,
+        });
         this.audio.play();
       };
       document.body.appendChild(this.audio);
     } else {
       this.audio.play();
-      this.setState({ isPlaying: true });
+      this.setState({ isPlaying: true, isLoading: false });
     }
   };
 

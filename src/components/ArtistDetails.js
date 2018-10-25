@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Spinner } from './Spinner';
-import IconPerson from './Icon/IconPerson';
 import { fetchArtistJSON } from '../api';
 
 class ArtistDetails extends React.Component {
@@ -22,10 +21,10 @@ class ArtistDetails extends React.Component {
     return isLoading ? (
       <Spinner className="center" />
     ) : artist ? (
-      <div>
+      <Fragment>
         <ArtistHeader artist={artist} />
         <ArtistConcerts artist={artist} />
-      </div>
+      </Fragment>
     ) : (
       'Something went wrong'
     );
@@ -35,12 +34,11 @@ class ArtistDetails extends React.Component {
 function ArtistHeader({ artist }) {
   return (
     <div className="heading row">
-      {artist.images && artist.images.length > 0 ? (
-        <img className="artwork" src={artist.images[0].url} alt={artist.name} />
-      ) : (
-        <IconPerson />
-      )}
-
+      <img
+        className="artwork"
+        src={artist.images[0].url}
+        alt={artist.name}
+      />
       <div>
         <h1>{artist.name}</h1>
         <div className="meta">

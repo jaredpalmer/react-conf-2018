@@ -17,11 +17,13 @@ export function Track({ track }) {
             role="button"
             onClick={iAmPlaying ? pause(track) : play(track)}
           >
-            {iAmPlaying ? (
+            {currentTrack && currentTrack.id === track.id ? (
               isLoading ? (
                 <Spinner className="avatar" />
-              ) : (
+              ) : isPlaying ? (
                 <IconPause />
+              ) : (
+                <IconPlay />
               )
             ) : (
               <IconPlay />

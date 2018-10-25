@@ -121,7 +121,9 @@ export class Debugger extends PureComponent {
               value={this.state.requestTime}
               onChange={e => {
                 e.stopPropagation();
-                this.setState({ requestTime: parseFloat(e.target.value) });
+                this.setState({
+                  requestTime: parseFloat(e.target.value),
+                });
               }}
             />
           </div>
@@ -135,8 +137,9 @@ export class Debugger extends PureComponent {
           </label>
           <br />
           <br />
-          {Object.values(this.state.requests).filter(x => x.progress !== 100)
-            .length > 0 ? (
+          {Object.values(this.state.requests).filter(
+            x => x.progress !== 100
+          ).length > 0 ? (
             <Fragment>
               <div style={{ marginBottom: 10 }}>
                 <b>Loading</b>
@@ -147,7 +150,9 @@ export class Debugger extends PureComponent {
               <div style={{ marginBottom: 10 }}>
                 <b>Loading</b>
               </div>
-              <small style={{ height: 20, display: 'block' }}>(None)</small>
+              <small style={{ height: 20, display: 'block' }}>
+                (None)
+              </small>
             </Fragment>
           )}
           {Object.keys(this.state.requests)
@@ -195,12 +200,13 @@ export class Debugger extends PureComponent {
                 </div>
               );
             })}
-          {Object.values(this.state.requests).filter(x => x.progress === 100)
-            .length > 0 ? (
+          {Object.values(this.state.requests).filter(
+            x => x.progress === 100
+          ).length > 0 ? (
             <Fragment>
               <br />
               <div style={{ marginBottom: 10 }}>
-                <b>Cached</b>{' '}
+                <b>Finished</b>{' '}
                 <button
                   style={{
                     height: 16,
@@ -219,9 +225,11 @@ export class Debugger extends PureComponent {
             <Fragment>
               <br />
               <div style={{ marginBottom: 10 }}>
-                <b>Cached</b>
+                <b>Finished</b>
               </div>
-              <small style={{ height: 20, display: 'block' }}>(None)</small>
+              <small style={{ height: 20, display: 'block' }}>
+                (None)
+              </small>
             </Fragment>
           )}
           {Object.keys(this.state.requests)
@@ -271,10 +279,3 @@ export class Debugger extends PureComponent {
     );
   }
 }
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// );
