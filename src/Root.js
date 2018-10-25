@@ -1,5 +1,4 @@
 import React, { Fragment, PureComponent } from 'react';
-import { createRoot, render } from 'react-dom';
 
 import {
   setFakeRequestTime,
