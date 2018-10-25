@@ -1,13 +1,38 @@
 import React, { Fragment, PureComponent } from 'react';
-import { unstable_trace as trace } from 'scheduler/tracing';
+import { createRoot, render } from 'react-dom';
+
 import {
   setFakeRequestTime,
   setPaused,
   setPauseNewRequests,
   setProgressHandler,
 } from './api';
+import App from './App';
 import Draggable from 'react-draggable';
-export default class Debugger extends PureComponent {
+import './index.scss';
+
+let handleReset;
+
+export default class Shell extends PureComponent {
+  state = {
+    iteration: 0,
+  };
+
+  componentDidMount() {
+    handleReset = this.handleReset;
+  }
+
+  handleReset = () =>
+    this.setState(prevState => ({
+      iteration: prevState.iteration + 1,
+    }));
+
+  render() {
+    return <App key={this.state.iteration} />;
+  }
+}
+
+export class Debugger extends PureComponent {
   state = {
     iteration: 0,
     strategy: 'async',
@@ -39,13 +64,13 @@ export default class Debugger extends PureComponent {
   }
 
   handleReset = () => {
-    trace('Clear cache', () => {
-      // cache.invalidate();
-      this.setState(state => ({
-        requests: {},
-      }));
-      this.props.handleReset();
-    });
+    // trace('Clear cache', () => {
+    // cache.invalidate();
+    this.setState(state => ({
+      requests: {},
+    }));
+    handleReset();
+    // });
   };
 
   handleProgress = (url, progress, isPaused) => {
@@ -247,3 +272,10 @@ export default class Debugger extends PureComponent {
     );
   }
 }
+
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// );

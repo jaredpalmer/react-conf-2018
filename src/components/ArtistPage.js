@@ -1,7 +1,6 @@
 import React from 'react';
 import ArtistTopTracks from './ArtistTopTracks';
 import ArtistDetails from './ArtistDetails';
-
 import ArtistAlbums from './ArtistAlbums';
 
 class ArtistPage extends React.Component {
