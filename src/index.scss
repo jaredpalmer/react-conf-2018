@@ -194,12 +194,21 @@ h6 {
     h3 {
       margin: 3rem 0 2rem;
       font-size: 1.5rem;
-      // text-align: center;
+      text-align: center;
     }
 
     .heading {
+      text-align: center;
       margin: 0 auto;
+    }
 
+    .artist-image {
+      height: 200px;
+      width: 200px;
+      object-fit: contain;
+      border: 1px solid #eee;
+      border-radius: 50%;
+      z-index: 2;
     }
 
 
@@ -237,7 +246,6 @@ h6 {
 .album-artwork {
   position: relative;
   color: $black;
-
 }
 
 .album-image {
@@ -257,11 +265,11 @@ h6 {
 
 }
 
-.preview {
+img.preview {
   filter: blur(2vw);
 }
 
-.loaded {
+img.loaded {
   opacity: 1;
   animation: reveal .3s ease-in;
 }
@@ -276,17 +284,7 @@ h6 {
   }
 }
 
-@media (min-width: 600px) {
-  .album-image {
-    height: 275px;
-  }
-}
 
-@media (min-width: 1000px) {
-  .album-image {
-    height: 300px;
-  }
-}
 
 .album-title {
   font-size: 1rem;

@@ -20,7 +20,7 @@
     "react-simple-infinite-scroll": "^0.0.1",
     "react-waypoint": "^8.0.3",
     "scheduler": "^0.10.0-alpha.8af6728",
-    "the-platform": "^0.2.0"
+    "the-platform": "^0.5.0"
   },
   "scripts": {
     "start": "react-scripts start",

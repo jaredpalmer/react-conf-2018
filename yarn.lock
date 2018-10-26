@@ -9421,10 +9421,10 @@ text-table@0.2.0, text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
-the-platform@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/the-platform/-/the-platform-0.2.0.tgz#dfacdc1b2eb78da20ffbd16ef1d497cc3663a89c"
-  integrity sha512-+GWODqUGSN8KfVC4iXR4omjcw8AS6NwV1Y2piryPJTT0WxME+yqnSjfV+ruKrNWfkeTVebt8DnwCag2t/VMGPw==
+the-platform@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/the-platform/-/the-platform-0.5.0.tgz#24179b9e5f546e740dc0debdfcd1b6a53edaa2fd"
+  integrity sha512-p+fRcWhmoZ+Jyvr/Nti52wgAsdlVyF6mh+W//b11EKozYE0GoZxVU58rH0cJpx1aj6ccOzWFfpHrvwVfzBUidQ==
 
 throat@^4.0.0:
   version "4.1.0"
