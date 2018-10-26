@@ -8,10 +8,6 @@ import {
   ArtistTopTracksJSON,
 } from './data';
 
-export function fetchArtistListJSON() {
-  return makeFakeAPICall('/artists', ArtistListJSON);
-}
-
 export function fetchArtistJSON(id) {
   return makeFakeAPICall(
     `/artists/${id}`,

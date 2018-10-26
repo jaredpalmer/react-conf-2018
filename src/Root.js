@@ -67,6 +67,7 @@ export class Debugger extends PureComponent {
     // cache.invalidate();
     this.setState(state => ({
       requests: {},
+      iteration: state.iteration + 1,
     }));
     handleReset();
     // });

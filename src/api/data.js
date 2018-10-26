@@ -122,8 +122,7 @@ export const ArtistsJSON = (delay = 0) => {
       images: [
         {
           height: 640,
-          url:
-            'https://i.scdn.co/image/7af4c101861c482e6fdd9f33f73d037f136afe36',
+          url: '/img/bigsean/avatar-hd.jpeg?delay=' + delay,
           width: 640,
         },
         {
@@ -134,8 +133,7 @@ export const ArtistsJSON = (delay = 0) => {
         },
         {
           height: 160,
-          url:
-            'https://i.scdn.co/image/75050184de713540aab408913f2b2d53cb45974f',
+          url: '/img/bigsean/avatar.jpeg?delay=' + delay,
           width: 160,
         },
       ],
@@ -194,20 +192,18 @@ export const ArtistsJSON = (delay = 0) => {
       images: [
         {
           height: 640,
-          url:
-            'https://i.scdn.co/image/ad19fc7b636c3e986b22947ec44dcc1c605aec70',
+          url: '/img/wale/avatar-hd.jpeg?delay=' + delay,
           width: 640,
         },
         {
           height: 320,
           url:
-            'https://i.scdn.co/image/7da49fd9b42ab7f9bb30b89e6e58a2ebbd63df71',
+            'https://i.scdn.co/image/3e078572245ba8875cc2f04fa9ac817d1aaccaff',
           width: 320,
         },
         {
           height: 160,
-          url:
-            'https://i.scdn.co/image/0a562e613bc4135e63a4954dfb8cec8f25ec08d8',
+          url: '/img/wale/avatar.jpeg?delay=' + delay,
           width: 160,
         },
       ],

@@ -5,7 +5,7 @@ export function codeSplitComponent(getComponent) {
     static Component = null;
     state = { Component: LazyComponent.Component };
 
-    componentWillMount() {
+    componentDidMount() {
       if (!this.state.Component) {
         getComponent().then(Component => {
           LazyComponent.Component = Component;

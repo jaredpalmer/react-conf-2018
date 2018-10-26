@@ -1,32 +1,20 @@
-import React, { Fragment } from 'react';
+import React, { Suspense, Fragment } from 'react';
 import { Spinner } from './Spinner';
 import { fetchArtistJSON } from '../api';
+import { Img, SuperImage } from './Img';
+import { Script } from './Script';
+import { unstable_createResource as createResource } from 'react-cache';
+
+const ArtistDetailsResource = createResource(fetchArtistJSON);
 
 class ArtistDetails extends React.Component {
-  state = {
-    artist: null,
-    isLoading: true,
-  };
-
-  componentDidMount() {
-    fetchArtistJSON(this.props.id).then(
-      artist => this.setState({ isLoading: false, artist }),
-      error => this.setState({ isLoading: false, error })
-    );
-  }
-
   render() {
-    const { artist, isLoading } = this.state;
-
-    return isLoading ? (
-      <Spinner className="center" />
-    ) : artist ? (
+    const artist = ArtistDetailsResource.read(this.props.id);
+    return (
       <Fragment>
         <ArtistHeader artist={artist} />
         <ArtistConcerts artist={artist} />
       </Fragment>
-    ) : (
-      'Something went wrong'
     );
   }
 }
@@ -34,11 +22,7 @@ class ArtistDetails extends React.Component {
 function ArtistHeader({ artist }) {
   return (
     <div className="heading row">
-      <img
-        className="artwork"
-        src={artist.images[0].url}
-        alt={artist.name}
-      />
+      <SuperImage className="artwork" images={artist.images} />
       <div>
         <h1>{artist.name}</h1>
         <div className="meta">
@@ -59,6 +43,7 @@ class ArtistConcerts extends React.Component {
     return concert ? (
       <div className="artist-concerts">
         <h3>Next Concert</h3>
+
         <div className="row ">
           <div>
             <h4>{concert.venue}</h4>
@@ -66,7 +51,11 @@ class ArtistConcerts extends React.Component {
               {concert.cityState}, {concert.date}
             </div>
           </div>
-          <button onClick={this.handleClick}>Buy Tickets</button>
+          <Suspense maxDuration={500} fallback={<Spinner />}>
+            <Script src="/fakestripe.js?delay=5000">
+              <button onClick={this.handleClick}>Buy Tickets</button>
+            </Script>
+          </Suspense>
         </div>
       </div>
     ) : null;

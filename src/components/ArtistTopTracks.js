@@ -1,30 +1,19 @@
 import React from 'react';
-import { Spinner } from './Spinner';
 import { Track } from './Track';
 import { fetchArtistTopTracksJSON } from '../api';
+import { unstable_createResource as createResource } from 'react-cache';
+
+const ArtistTopTracksResource = createResource(
+  fetchArtistTopTracksJSON
+);
 
 class ArtistTopTracks extends React.Component {
-  state = {
-    tracks: [],
-    isLoading: true,
-  };
-
-  componentDidMount() {
-    fetchArtistTopTracksJSON(this.props.id).then(
-      tracks => this.setState({ tracks, isLoading: false }),
-      error => this.setState({ isLoading: false })
-    );
-  }
-
   render() {
-    const { tracks, isLoading, currentId } = this.state;
+    const tracks = ArtistTopTracksResource.read(this.props.id);
     return (
       <div className="topTracks">
         <h3>Top Tracks</h3>
-        {isLoading ? (
-          <Spinner className="center" />
-        ) : (
-          tracks &&
+        {tracks &&
           tracks
             .slice(0, 3)
             .map(track => (
@@ -33,10 +22,8 @@ class ArtistTopTracks extends React.Component {
                 track={track}
                 play={this.play}
                 pause={this.pause}
-                currentId={currentId}
               />
-            ))
-        )}
+            ))}
       </div>
     );
   }
