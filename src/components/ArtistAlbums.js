@@ -26,7 +26,9 @@ class ArtistAlbums extends React.Component {
           <Spinner className="center" />
         ) : albums ? (
           <AlbumGrid albums={albums} />
-        ) : null}
+        ) : (
+          'Oh no.'
+        )}
       </>
     );
   }
