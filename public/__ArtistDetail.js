@@ -1,37 +1,29 @@
 import React from 'react';
-import { Spinner } from './Spinner';
 import { fetchArtistJSON } from '../api';
+import { unstable_createResource } from 'react-cache';
+import { Img } from 'the-platform';
 
-class ArtistDetails extends React.Component {
-  state = {
-    artist: null,
-    isLoading: true,
-  };
+const ArtistResource = unstable_createResource(fetchArtistJSON);
 
-  componentDidMount() {
-    fetchArtistJSON(this.props.id).then(
-      artist => this.setState({ isLoading: false, artist }),
-      error => this.setState({ isLoading: false, error })
-    );
-  }
-
-  render() {
-    const { artist, isLoading } = this.state;
-    if (isLoading) {
-      return <Spinner className="center" />;
-    }
-    return <ArtistHeader artist={artist} />;
-  }
-}
-
-function ArtistHeader({ artist }) {
+function ArtistDetails({ id }) {
+  const artist = ArtistResource.read(id);
   return (
     <div className="heading">
-      <img
-        className="artist-image"
-        src={artist.images[0].url}
-        alt={artist.name}
-      />
+      <React.Suspense
+        fallback={
+          <img
+            className="artist-image preview"
+            src={artist.images[2].url}
+            alt={artist.name}
+          />
+        }
+      >
+        <Img
+          className="artist-image loaded"
+          src={artist.images[0].url}
+          alt={artist.name}
+        />
+      </React.Suspense>
       <div>
         <h1>{artist.name}</h1>
         <div className="meta">
