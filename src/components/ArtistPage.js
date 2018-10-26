@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ArtistTopTracks from './ArtistTopTracks';
 import ArtistDetails from './ArtistDetails';
 import ArtistAlbums from './ArtistAlbums';
+import { Spinner } from './Spinner';
 
 class ArtistPage extends React.Component {
   componentDidUpdate(prevProps) {
@@ -13,12 +14,20 @@ class ArtistPage extends React.Component {
   render() {
     return (
       <div className="artist">
-        <ArtistDetails id={this.props.id} key={`artist-${this.props.id}`} />
-        <ArtistTopTracks
-          id={this.props.id}
-          key={`topTracks-${this.props.id}`}
-        />
-        <ArtistAlbums id={this.props.id} key={`albums-${this.props.id}`} />
+        <Suspense fallback={<Spinner />}>
+          <ArtistDetails
+            id={this.props.id}
+            key={`artist-${this.props.id}`}
+          />
+          <ArtistTopTracks
+            id={this.props.id}
+            key={`topTracks-${this.props.id}`}
+          />
+          <ArtistAlbums
+            id={this.props.id}
+            key={`albums-${this.props.id}`}
+          />
+        </Suspense>
       </div>
     );
   }

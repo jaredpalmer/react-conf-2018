@@ -1,44 +1,33 @@
-import React, { Fragment } from 'react';
-import { Spinner } from './Spinner';
+import React, { Suspense } from 'react';
 import { fetchArtistJSON } from '../api';
+import { Img } from 'the-platform';
+import { unstable_createResource } from 'react-cache';
 
-class ArtistDetails extends React.Component {
-  state = {
-    artist: null,
-    isLoading: true,
-  };
+const ArtistDetailsResource = unstable_createResource(fetchArtistJSON);
 
-  componentDidMount() {
-    fetchArtistJSON(this.props.id).then(
-      artist => this.setState({ isLoading: false, artist }),
-      error => this.setState({ isLoading: false, error })
-    );
-  }
-
-  render() {
-    const { artist, isLoading } = this.state;
-
-    return isLoading ? (
-      <Spinner className="center" />
-    ) : artist ? (
-      <Fragment>
-        <ArtistHeader artist={artist} />
-        <ArtistConcerts artist={artist} />
-      </Fragment>
-    ) : (
-      'Something went wrong'
-    );
-  }
-}
+const ArtistDetails = ({ id }) => (
+  <ArtistHeader artist={ArtistDetailsResource.read(id)} />
+);
 
 function ArtistHeader({ artist }) {
   return (
-    <div className="heading row">
-      <img
-        className="artwork"
-        src={artist.images[0].url}
-        alt={artist.name}
-      />
+    <div className="heading">
+      <Suspense
+        maxDuration={500}
+        fallback={
+          <img
+            className="artist-image preview"
+            src={artist.images[2].url}
+            alt={artist.name}
+          />
+        }
+      >
+        <Img
+          className="artist-image loaded"
+          src={artist.images[0].url}
+          alt={artist.name}
+        />
+      </Suspense>
       <div>
         <h1>{artist.name}</h1>
         <div className="meta">
@@ -47,30 +36,6 @@ function ArtistHeader({ artist }) {
       </div>
     </div>
   );
-}
-
-class ArtistConcerts extends React.Component {
-  handleClick = () => {
-    window.FakeStripe.charge();
-  };
-
-  render() {
-    const { concert } = this.props.artist;
-    return concert ? (
-      <div className="artist-concerts">
-        <h3>Next Concert</h3>
-        <div className="row ">
-          <div>
-            <h4>{concert.venue}</h4>
-            <div>
-              {concert.cityState}, {concert.date}
-            </div>
-          </div>
-          <button onClick={this.handleClick}>Buy Tickets</button>
-        </div>
-      </div>
-    ) : null;
-  }
 }
 
 export default ArtistDetails;

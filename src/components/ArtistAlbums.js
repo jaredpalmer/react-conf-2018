@@ -1,36 +1,20 @@
-import React, { Fragment } from 'react';
+import React, { Suspense } from 'react';
 import { fetchArtistAlbumsJSON } from '../api';
-import { Spinner } from './Spinner';
 import { Link } from '@reach/router';
 import IconPerson from './Icon/IconPerson';
+import { Img } from 'the-platform';
+import { unstable_createResource } from 'react-cache';
 
-class ArtistAlbums extends React.Component {
-  state = {
-    isLoading: true,
-    albums: [],
-  };
+const ArtistAlbumsResource = unstable_createResource(
+  fetchArtistAlbumsJSON
+);
 
-  componentDidMount() {
-    fetchArtistAlbumsJSON(this.props.id).then(
-      albums => this.setState({ isLoading: false, albums }),
-      error => this.setState({ isLoading: false, error })
-    );
-  }
-
-  render() {
-    const { isLoading, albums } = this.state;
-    return (
-      <Fragment>
-        <h3>Albums</h3>
-        {isLoading ? (
-          <Spinner className="center" />
-        ) : albums ? (
-          <AlbumGrid albums={albums} />
-        ) : null}
-      </Fragment>
-    );
-  }
-}
+const ArtistAlbums = ({ id }) => (
+  <>
+    <h3>Albums</h3>
+    <AlbumGrid albums={ArtistAlbumsResource.read(id)} />
+  </>
+);
 
 function AlbumGrid({ albums }) {
   return (
@@ -48,14 +32,26 @@ function AlbumItem({ album }) {
     <Link to={`/album/${album.id}`} key={album.id}>
       {album.images && album.images.length > 0 ? (
         <div className="album-artwork">
-          <img
-            className="album-image"
-            src={album.images[0].url}
-            alt={album.name}
-          />
+          <Suspense
+            maxDuration={500}
+            fallback={
+              <img
+                className="album-image preview"
+                src={album.images[2].url}
+                alt={album.name}
+              />
+            }
+          >
+            <Img
+              className="album-image loaded"
+              src={album.images[0].url}
+              alt={album.name}
+            />
+          </Suspense>
           <div className="album-title center">{album.name}</div>
           <div className="album-meta center">
-            {album.total_tracks} Songs • {album.release_date.slice(0, 4)}
+            {album.total_tracks} Songs •{' '}
+            {album.release_date.slice(0, 4)}
           </div>
         </div>
       ) : (

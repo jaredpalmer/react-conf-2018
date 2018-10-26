@@ -1,5 +1,4 @@
 import React from 'react';
-
 export const PlayerContext = React.createContext(null);
 
 class PlayerProvider extends React.Component {
