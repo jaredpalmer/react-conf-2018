@@ -253,6 +253,27 @@ h6 {
   &:hover {
     transform: translateY(-3px);
   }
+
+
+}
+
+.preview {
+  filter: blur(2vw);
+}
+
+.loaded {
+  opacity: 1;
+  animation: reveal .3s ease-in;
+}
+
+@keyframes reveal {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 @media (min-width: 600px) {
