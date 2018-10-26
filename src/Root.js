@@ -1,5 +1,5 @@
 import React, { Fragment, PureComponent } from 'react';
-
+import ReactDOM from 'react-dom';
 import {
   setFakeRequestTime,
   setPaused,
@@ -279,3 +279,5 @@ export class Debugger extends PureComponent {
     );
   }
 }
+
+ReactDOM.render(<Debugger />, document.getElementById('debugger'));
