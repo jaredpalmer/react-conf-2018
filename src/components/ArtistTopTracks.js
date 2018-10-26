@@ -12,30 +12,21 @@ class ArtistTopTracks extends React.Component {
   componentDidMount() {
     fetchArtistTopTracksJSON(this.props.id).then(
       tracks => this.setState({ tracks, isLoading: false }),
-      error => this.setState({ isLoading: false })
+      error => this.setState({ error, isLoading: false })
     );
   }
 
   render() {
-    const { tracks, isLoading, currentId } = this.state;
+    const { tracks, isLoading } = this.state;
     return (
       <div className="topTracks">
         <h3>Top Tracks</h3>
         {isLoading ? (
           <Spinner className="center" />
         ) : (
-          tracks &&
           tracks
             .slice(0, 3)
-            .map(track => (
-              <Track
-                key={track.id}
-                track={track}
-                play={this.play}
-                pause={this.pause}
-                currentId={currentId}
-              />
-            ))
+            .map(track => <Track key={track.id} track={track} />)
         )}
       </div>
     );

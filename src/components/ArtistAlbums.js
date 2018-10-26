@@ -20,14 +20,14 @@ class ArtistAlbums extends React.Component {
   render() {
     const { isLoading, albums } = this.state;
     return (
-      <Fragment>
+      <>
         <h3>Albums</h3>
         {isLoading ? (
           <Spinner className="center" />
         ) : albums ? (
           <AlbumGrid albums={albums} />
         ) : null}
-      </Fragment>
+      </>
     );
   }
 }

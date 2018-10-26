@@ -17,25 +17,18 @@ class ArtistDetails extends React.Component {
 
   render() {
     const { artist, isLoading } = this.state;
-
-    return isLoading ? (
-      <Spinner className="center" />
-    ) : artist ? (
-      <Fragment>
-        <ArtistHeader artist={artist} />
-        <ArtistConcerts artist={artist} />
-      </Fragment>
-    ) : (
-      'Something went wrong'
-    );
+    if (isLoading) {
+      return <Spinner className="center" />;
+    }
+    return <ArtistHeader artist={artist} />;
   }
 }
 
 function ArtistHeader({ artist }) {
   return (
-    <div className="heading row">
+    <div className="heading">
       <img
-        className="artwork"
+        className="artist-image"
         src={artist.images[0].url}
         alt={artist.name}
       />
@@ -49,28 +42,28 @@ function ArtistHeader({ artist }) {
   );
 }
 
-class ArtistConcerts extends React.Component {
-  handleClick = () => {
-    window.FakeStripe.charge();
-  };
-
-  render() {
-    const { concert } = this.props.artist;
-    return concert ? (
-      <div className="artist-concerts">
-        <h3>Next Concert</h3>
-        <div className="row ">
-          <div>
-            <h4>{concert.venue}</h4>
-            <div>
-              {concert.cityState}, {concert.date}
-            </div>
-          </div>
-          <button onClick={this.handleClick}>Buy Tickets</button>
-        </div>
-      </div>
-    ) : null;
-  }
-}
-
 export default ArtistDetails;
+
+// class ArtistConcerts extends React.Component {
+//   handleClick = () => {
+//     window.FakeStripe.charge();
+//   };
+
+//   render() {
+//     const { concert } = this.props.artist;
+//     return concert ? (
+//       <div className="artist-concerts">
+//         <h3>Next Concert</h3>
+//         <div className="row ">
+//           <div>
+//             <h4>{concert.venue}</h4>
+//             <div>
+//               {concert.cityState}, {concert.date}
+//             </div>
+//           </div>
+//           <button onClick={this.handleClick}>Buy Tickets</button>
+//         </div>
+//       </div>
+//     ) : null;
+//   }
+// }
