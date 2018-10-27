@@ -1,3 +1,14 @@
+/*
+
+THIS IS TOTALLY FUCKING RATCHET AND HACKED TOGETHER AD HOC. 
+IT EVOLVED OVER TIME AS MY DEMO CHANGED. THIS WOULD NEVER PASS A 
+CODE REVIEW AND I AM ASHAMED OF WHAT I HAVE DONE HERE. 
+I AM CLOSING THIS FILE FOR GOOD. I HAVE BROUGHT
+SHAME TO MY HOUSE AND FAMILY. I AM SORRY. 
+
+*/
+
+
 *,
 *::before,
 *::after {
@@ -375,7 +386,7 @@ svg {
 
 .🎛 {
   position: fixed;
-  max-width: calc(var(--pt)*32);
+  max-width: calc(var(--pt)*31);
   border-radius: var(--pt);
   padding: calc(var(--pt)*2);
   background-color: var(--color-debuggerBg);

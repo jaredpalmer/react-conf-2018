@@ -8,15 +8,8 @@ import {
   ArtistTopTracksJSON,
 } from './data';
 
-export function fetchArtistListJSON() {
-  return makeFakeAPICall('/artists', ArtistListJSON);
-}
-
 export function fetchArtistJSON(id) {
-  return makeFakeAPICall(
-    `/artists/${id}`,
-    ArtistsJSON(fakeRequestTime)[id]
-  );
+  return makeFakeAPICall(`/artists/${id}`, ArtistsJSON(fakeRequestTime)[id]);
 }
 
 export function fetchArtistAlbumsJSON(id) {
@@ -33,7 +26,7 @@ export function fetchArtistTopTracksJSON(id) {
   );
 }
 
-export function searchArtistsJSON(query) {
+export function fetchArtistListJSON(query) {
   return makeFakeAPICall(`/artists`, ArtistListJSON);
 }
 
@@ -50,9 +43,7 @@ export async function fetchAlbumJSON(id) {
 }
 
 export async function fetchAlbumTracksJSON(id) {
-  const res = await fetch(
-    `https://api.spotify.com/v1/albums/${id}/tracks`
-  );
+  const res = await fetch(`https://api.spotify.com/v1/albums/${id}/tracks`);
 
   return (await res.json()).items;
 }

@@ -122,8 +122,7 @@ export const ArtistsJSON = (delay = 0) => {
       images: [
         {
           height: 640,
-          url:
-            'https://i.scdn.co/image/7af4c101861c482e6fdd9f33f73d037f136afe36',
+          url: '/img/bigsean/avatar-hd.jpeg?delay=' + delay,
           width: 640,
         },
         {
@@ -134,8 +133,7 @@ export const ArtistsJSON = (delay = 0) => {
         },
         {
           height: 160,
-          url:
-            'https://i.scdn.co/image/75050184de713540aab408913f2b2d53cb45974f',
+          url: '/img/bigsean/avatar.jpeg?delay=' + delay,
           width: 160,
         },
       ],
