@@ -1,0 +1,64 @@
+import React from 'react';
+import { fetchArtistAlbumsJSON } from '../api';
+import { Link } from '@reach/router';
+import IconPerson from './Icon/IconPerson';
+import { Img } from 'the-platform';
+import { unstable_createResource } from 'react-cache';
+
+const ArtistAlbumsResource = unstable_createResource(fetchArtistAlbumsJSON);
+
+class ArtistAlbums extends React.Component {
+  render() {
+    return (
+      <>
+        <h3>Albums</h3>
+        <AlbumGrid albums={ArtistAlbumsResource.read(this.props.id)} />
+      </>
+    );
+  }
+}
+
+function AlbumGrid({ albums }) {
+  return (
+    <div className="album-grid">
+      {albums &&
+        albums
+          .slice(0, 6)
+          .map(album => <AlbumItem album={album} key={album.id} />)}
+    </div>
+  );
+}
+
+function AlbumItem({ album }) {
+  return (
+    <Link to={`/album/${album.id}`} key={album.id}>
+      <div className="album-artwork">
+        {album.images && album.images.length > 0 ? (
+          <React.Suspense
+            fallback={
+              <img
+                className="artist-image preview"
+                src={album.images[2].url}
+                alt={album.name}
+              />
+            }
+          >
+            <Img
+              className="album-image loaded"
+              src={album.images[0].url}
+              alt={album.name}
+            />
+          </React.Suspense>
+        ) : (
+          <IconPerson />
+        )}
+        <div className="album-title center">{album.name}</div>
+        <div className="album-meta center">
+          {album.total_tracks} Songs • {album.release_date.slice(0, 4)}
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+export default ArtistAlbums;
