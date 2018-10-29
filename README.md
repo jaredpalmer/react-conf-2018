@@ -1,5 +1,9 @@
 # Moving to React Suspense
 
+By [Jared Palmer](https://twitter.com/jaredpalmer) at [React Conf 2018](https://conf.reactjs.org).
+
+
+
 This is the source code to my talk at React Conf 2018 called "Moving to React Suspense". It is a small slice of Spotify called Suspensify. It's built with create react app, reach router, and good ol' setState. 
 
 
