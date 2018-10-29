@@ -2,6 +2,12 @@
 
 This is the source code to my talk at React Conf 2018 called "Moving to React Suspense". It is a small slice of Spotify called Suspensify. It's built with create react app, reach router, and good ol' setState. 
 
+
+- [Watch the full talk on YouTube](https://youtu.be/SCQgE4mTnjU)
+- [Download Slides](https://github.com/jaredpalmer/react-conf-2018/raw/master/MovingToReactSuspense.key)
+- [Checkout "The Platform"](https://github.com/palmerhq/the-platform)
+
+
 This repo is a bit gross. node_modules are checked in because I was unsure of the wifi situation and needed to lock in builds from react master while I built this out.
 
 It's separated into 3 folders:
@@ -12,10 +18,6 @@ It's separated into 3 folders:
 
 > Note the Ken Wheeler and Wale routes do not work. I didn't bother making fake data for them. Sorry. Only the Drake and Big Sean routes work (first 2 results).
 
-
-- [Watch the full talk on YouTube](https://youtu.be/SCQgE4mTnjU)
-- [Download Slides](https://github.com/jaredpalmer/react-conf-2018/raw/master/MovingToReactSuspense.key)
-- [Checkout "The Platform"](https://github.com/palmerhq/the-platform)
 
 
 ## What's it look like?
