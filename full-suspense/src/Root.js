@@ -12,7 +12,7 @@ import './index.scss';
 
 let handleReset;
 
-export default class Shell extends PureComponent {
+export default class Shell extends React.Component {
   state = {
     iteration: 0,
   };

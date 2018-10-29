@@ -3,6 +3,7 @@ import ListItem from './ListItem';
 import { fetchArtistListJSON } from '../api';
 import { Logo } from './Icon/Logo';
 import { unstable_createResource } from 'react-cache';
+import { Spinner } from './Spinner';
 
 const ArttistListResource = unstable_createResource(fetchArtistListJSON);
 
@@ -14,12 +15,11 @@ class Search extends React.Component {
   };
 
   render() {
-    const results = ArttistListResource.read();
     return (
       <div className="search">
         <Logo />
-        {results.length > 0 ? (
-          results.map(item => (
+        <React.Suspense maxDuration={1000} fallback={<Spinner size="large" />}>
+          {ArttistListResource.read().map(item => (
             <ListItem
               to={`/artist/${item.id}`}
               onClick={currentId => this.setState({ currentId })}
@@ -27,10 +27,8 @@ class Search extends React.Component {
               item={item}
               currentId={this.state.currentId}
             />
-          ))
-        ) : (
-          <div className="empty">Oh no.</div>
-        )}
+          ))}
+        </React.Suspense>
       </div>
     );
   }

@@ -1,14 +1,11 @@
 import React from 'react';
 import { fetchArtistAlbumsJSON } from '../api';
-import { Spinner } from './Spinner';
 import { Link } from '@reach/router';
 import IconPerson from './Icon/IconPerson';
 import { Img } from 'the-platform';
 import { unstable_createResource } from 'react-cache';
 
-const ArtistAlbumsResource = unstable_createResource(
-  fetchArtistAlbumsJSON
-);
+const ArtistAlbumsResource = unstable_createResource(fetchArtistAlbumsJSON);
 
 class ArtistAlbums extends React.Component {
   render() {
@@ -55,8 +52,7 @@ function AlbumItem({ album }) {
           </React.Suspense>
           <div className="album-title center">{album.name}</div>
           <div className="album-meta center">
-            {album.total_tracks} Songs •{' '}
-            {album.release_date.slice(0, 4)}
+            {album.total_tracks} Songs • {album.release_date.slice(0, 4)}
           </div>
         </div>
       ) : (

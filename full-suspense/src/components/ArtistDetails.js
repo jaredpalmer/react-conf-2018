@@ -2,7 +2,7 @@ import React from 'react';
 import { fetchArtistJSON } from '../api';
 import { unstable_createResource } from 'react-cache';
 
-const ImageResource = unstable_createResource(
+export const ImageResource = unstable_createResource(
   source =>
     new Promise(resolve => {
       const img = new Image();

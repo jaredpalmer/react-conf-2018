@@ -1,4 +1,3 @@
-import { fetch } from './auth';
 import uniqBy from 'lodash.uniqby';
 
 import {
@@ -28,24 +27,6 @@ export function fetchArtistTopTracksJSON(id) {
 
 export function fetchArtistListJSON(query) {
   return makeFakeAPICall(`/artists`, ArtistListJSON);
-}
-
-export async function fetchArtistRelatedArtistsJSON(id) {
-  const res = await fetch(
-    `https://api.spotify.com/v1/artists/${id}/related-artists`
-  );
-  return (await res.json()).artists;
-}
-
-export async function fetchAlbumJSON(id) {
-  const res = await fetch(`https://api.spotify.com/v1/albums/${id}`);
-  return uniqBy((await res.json()).items, 'name');
-}
-
-export async function fetchAlbumTracksJSON(id) {
-  const res = await fetch(`https://api.spotify.com/v1/albums/${id}/tracks`);
-
-  return (await res.json()).items;
 }
 
 let fakeRequestTime = 1000;
