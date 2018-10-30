@@ -102,9 +102,10 @@ module.exports = function(proxy, allowedHost) {
       // This lets us open files from the runtime error overlay.
       app.use(errorOverlayMiddleware());
 
+      // Delay hd images by X ms
       app.use((req, res, next) => {
         if (req.url.includes('-hd.jpeg')) {
-          setTimeout(next, req.query.delay || 0);
+          setTimeout(next, parseInt(req.query.delay, 10) || 0);
         } else {
           next();
         }

@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@reach/router": "^1.2.1",
-    "glamor": "^2.20.40",
     "lodash.uniqby": "^4.7.0",
     "node-sass-chokidar": "^1.3.4",
     "qs": "^6.5.2",
@@ -13,7 +12,6 @@
     "react-dom": "^16.7.0-alpha.0",
     "react-draggable": "^3.0.5",
     "react-scripts": "2.0.5",
-    "react-simple-infinite-scroll": "^0.0.1",
     "scheduler": "^0.10.0-alpha.8af6728",
     "the-platform": "^0.5.0"
   },
@@ -22,7 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postinstall": "cp ./webpackDevServer.config.js ./node_modules/react-scripts/config/webpackDevServer.config.js"
+    "postinstall": "cp ./patches/webpackDevServer.config.js ./node_modules/react-scripts/config/webpackDevServer.config.js"
   },
   "eslintConfig": {
     "extends": "react-app"

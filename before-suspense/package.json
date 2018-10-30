@@ -13,7 +13,6 @@
     "react-dom": "^16.7.0-alpha.0",
     "react-draggable": "^3.0.5",
     "react-scripts": "2.0.5",
-    "react-simple-infinite-scroll": "^0.0.1",
     "scheduler": "^0.10.0-alpha.8af6728",
     "the-platform": "^0.5.0"
   },
@@ -22,7 +21,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postinstall": "cp ./webpackDevServer.config.js ./node_modules/react-scripts/config/webpackDevServer.config.js"
+    "postinstall": "cp ./patches/webpackDevServer.config.js ./node_modules/react-scripts/config/webpackDevServer.config.js"
   },
   "eslintConfig": {
     "extends": "react-app"
