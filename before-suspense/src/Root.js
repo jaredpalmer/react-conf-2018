@@ -36,7 +36,7 @@ export class Debugger extends PureComponent {
     iteration: 0,
     strategy: 'async',
     requestTime: 1,
-    showDebugger: false,
+    showDebugger: true,
     pauseNewRequests: false,
     waitTime: 0,
     requests: {},
@@ -137,9 +137,8 @@ export class Debugger extends PureComponent {
           </label>
           <br />
           <br />
-          {Object.values(this.state.requests).filter(
-            x => x.progress !== 100
-          ).length > 0 ? (
+          {Object.values(this.state.requests).filter(x => x.progress !== 100)
+            .length > 0 ? (
             <Fragment>
               <div style={{ marginBottom: 10 }}>
                 <b>Loading</b>
@@ -150,9 +149,7 @@ export class Debugger extends PureComponent {
               <div style={{ marginBottom: 10 }}>
                 <b>Loading</b>
               </div>
-              <small style={{ height: 20, display: 'block' }}>
-                (None)
-              </small>
+              <small style={{ height: 20, display: 'block' }}>(None)</small>
             </Fragment>
           )}
           {Object.keys(this.state.requests)
@@ -200,9 +197,8 @@ export class Debugger extends PureComponent {
                 </div>
               );
             })}
-          {Object.values(this.state.requests).filter(
-            x => x.progress === 100
-          ).length > 0 ? (
+          {Object.values(this.state.requests).filter(x => x.progress === 100)
+            .length > 0 ? (
             <Fragment>
               <br />
               <div style={{ marginBottom: 10 }}>
@@ -227,9 +223,7 @@ export class Debugger extends PureComponent {
               <div style={{ marginBottom: 10 }}>
                 <b>Finished</b>
               </div>
-              <small style={{ height: 20, display: 'block' }}>
-                (None)
-              </small>
+              <small style={{ height: 20, display: 'block' }}>(None)</small>
             </Fragment>
           )}
           {Object.keys(this.state.requests)
