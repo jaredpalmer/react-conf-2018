@@ -28,7 +28,7 @@ yarn start
 > Note the Ken Wheeler and Wale routes do not work. I didn't bother making fake data for them. Sorry. Only the Drake and Big Sean routes work (first 2 results).
 
 
-> In the `patches` directory, there is a patched version of CRA's `config/webpackDevServer.config.js` that adds a little express middleware that will delay the high-res images from loading for demo purposes. It sniffs any requests including with `-hd.jpeg` and waits for value of `delay` query parameter. The widget's request latency slider is used to set this value for all images.
+> In the `patches` directory, there is a patched version of CRA's `config/webpackDevServer.config.js` that adds a little express middleware that will delay the high-res images from loading for demo purposes. It sniffs any requests including with `-hd.jpeg` and waits for the value of `delay` query parameter. The `<Debugger />` request latency slider is used to set this query parameter's value for all images.
 
 
 ## What's it look like?
